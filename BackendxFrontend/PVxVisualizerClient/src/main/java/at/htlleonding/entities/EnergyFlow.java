@@ -1,4 +1,4 @@
-package at.htlleonding.pvvisualizer.entities;
+package at.htlleonding.entities;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,17 +10,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "data")
-public class Data {
+@Table(name = "Energyflow")
+public class EnergyFlow {
+
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
     private String title;
-
-    @Column
-    private String date;
 
     @Column
     private Double value;

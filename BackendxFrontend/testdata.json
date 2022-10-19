@@ -1,105 +1,320 @@
 {
-    "data": [
+  "Data":[
+    {
+      "id":1,
+      "title":"Lourdes",
+      "date":"2022-07-29 22:59:55",
+      "value":543.49
+    },
+    {
+      "id":2,
+      "title":"Best of Times, The (Mei li shi guang)",
+      "date":"2022-08-17 22:31:55",
+      "value":207.83
+    },
+    {
+      "id":3,
+      "title":"Venom",
+      "date":"2022-08-13 19:36:39",
+      "value":661.97
+    },
+    {
+      "id":4,
+      "title":"Darkness Falls",
+      "date":"2022-02-01 12:52:52",
+      "value":189.07
+    },
+    {
+      "id":5,
+      "title":"Loving You",
+      "date":"2021-12-07 09:27:05",
+      "value":918.12
+    },
+    {
+      "id":6,
+      "title":"Katt Williams: The Pimp Chronicles Pt. 1",
+      "date":"2021-12-03 06:57:51",
+      "value":39.64
+    },
+    {
+      "id":7,
+      "title":"Eleventh Year, The (Odinnadtsatyy) ",
+      "date":"2022-10-04 19:38:56",
+      "value":556.48
+    },
+    {
+      "id":8,
+      "title":"Iceman",
+      "date":"2022-07-12 01:13:40",
+      "value":88.55
+    },
+    {
+      "id":9,
+      "title":"Drawing Restraint 9",
+      "date":"2022-08-04 18:15:44",
+      "value":24.91
+    },
+    {
+      "id":10,
+      "title":"Living Dead Girl, The (Morte Vivante, La)",
+      "date":"2021-10-18 04:30:43",
+      "value":475.72
+    },
+    {
+      "id":11,
+      "title":"One Tough Cop",
+      "date":"2022-05-25 01:00:06",
+      "value":874.34
+    },
+    {
+      "id":12,
+      "title":"Young Lieutenant, The (Le petit lieutenant)",
+      "date":"2022-07-17 02:32:18",
+      "value":906.2
+    },
+    {
+      "id":13,
+      "title":"Misérables, Les",
+      "date":"2022-07-12 14:47:41",
+      "value":420.23
+    },
+    {
+      "id":14,
+      "title":"Seance (Kôrei)",
+      "date":"2022-10-10 11:10:38",
+      "value":283.56
+    },
+    {
+      "id":15,
+      "title":"Doctor Dolittle",
+      "date":"2021-12-01 13:20:33",
+      "value":605.36
+    },
+    {
+      "id":16,
+      "title":"Israeli Intelligence (Hamosad Hasagur)",
+      "date":"2022-07-28 01:43:00",
+      "value":537.14
+    },
+    {
+      "id":17,
+      "title":"Martha",
+      "date":"2022-04-05 16:35:31",
+      "value":457.91
+    },
+    {
+      "id":18,
+      "title":"Eddie Izzard: Glorious",
+      "date":"2022-06-18 04:01:18",
+      "value":937.82
+    },
+    {
+      "id":19,
+      "title":"Cheerleader Massacre",
+      "date":"2021-12-17 13:21:09",
+      "value":841.78
+    },
+    {
+      "id":20,
+      "title":"Starving Games, The",
+      "date":"2022-05-06 13:16:25",
+      "value":775.49
+    },
+    {
+      "id":21,
+      "title":"Bride of the Wind",
+      "date":"2022-05-23 06:24:38",
+      "value":707.98
+    },
+    {
+      "id":22,
+      "title":"From Within",
+      "date":"2022-05-27 22:44:32",
+      "value":697.36
+    },
+    {
+      "id":23,
+      "title":"Balloonatic, The",
+      "date":"2022-01-08 03:15:11",
+      "value":988.17
+    },
+    {
+      "id":24,
+      "title":"People in Places",
+      "date":"2021-12-31 20:00:23",
+      "value":626.89
+    },
+    {
+      "id":25,
+      "title":"Shinobi No Mono 3: Resurrection (Shin shinobi no mono)",
+      "date":"2022-02-23 21:00:03",
+      "value":227.09
+    },
+    {
+      "id":26,
+      "title":"Ax, The (couperet, Le)",
+      "date":"2022-05-18 07:35:33",
+      "value":165.51
+    },
+    {
+      "id":27,
+      "title":"Jackass Presents: Bad Grandpa",
+      "date":"2022-09-01 05:03:04",
+      "value":663.18
+    },
+    {
+      "id":28,
+      "title":"Irene in Time",
+      "date":"2022-04-03 13:58:23",
+      "value":278.24
+    },
+    {
+      "id":29,
+      "title":"Mummy: Tomb of the Dragon Emperor, The",
+      "date":"2021-11-13 21:56:27",
+      "value":267.14
+    },
+    {
+      "id":30,
+      "title":"Twice in a Lifetime",
+      "date":"2021-12-28 18:36:46",
+      "value":536.19
+    },
+    {
+      "id":31,
+      "title":"Comedy, The",
+      "date":"2022-01-09 23:42:08",
+      "value":436.71
+    },
+    {
+      "id":32,
+      "title":"Player, The",
+      "date":"2022-04-01 04:41:36",
+      "value":7.0
+    },
+    {
+      "id":33,
+      "title":"Destiny (a.k.a. Between Two Worlds) (Der müde Tod)",
+      "date":"2022-08-17 05:28:22",
+      "value":691.75
+    },
+    {
+      "id":34,
+      "title":"Hombre",
+      "date":"2022-05-19 20:48:42",
+      "value":450.2
+    },
+    {
+      "id":35,
+      "title":"Dr. No",
+      "date":"2021-10-19 20:07:18",
+      "value":817.88
+    },
+    {
+      "id":36,
+      "title":"Man of the Year, The (O Homem do Ano)",
+      "date":"2022-07-18 05:39:29",
+      "value":163.27
+    },
+    {
+      "id":37,
+      "title":"Monster, The (Mostro, Il)",
+      "date":"2022-09-01 03:44:40",
+      "value":609.48
+    },
+    {
+      "id":38,
+      "title":"Idle Mist (Vana Espuma)",
+      "date":"2022-09-22 02:05:00",
+      "value":598.93
+    },
+    {
+      "id":39,
+      "title":"I Just Didn't Do It (Soredemo boku wa yattenai)",
+      "date":"2022-02-09 18:34:18",
+      "value":64.02
+    },
+    {
+      "id":40,
+      "title":"Taqwacore: The Birth of Punk Islam",
+      "date":"2022-10-15 18:06:19",
+      "value":833.38
+    },
+    {
+      "id":41,
+      "title":"Shocker",
+      "date":"2022-03-13 21:49:51",
+      "value":318.55
+    },
+    {
+      "id":42,
+      "title":"Tinseltown",
+      "date":"2022-08-08 03:47:32",
+      "value":291.75
+    },
+    {
+      "id":43,
+      "title":"Arguing the World",
+      "date":"2022-02-13 09:40:52",
+      "value":548.85
+    },
+    {
+      "id":44,
+      "title":"Out of the Past",
+      "date":"2022-05-29 15:57:34",
+      "value":126.92
+    },
+    {
+      "id":45,
+      "title":"Blubberella",
+      "date":"2022-07-16 18:25:57",
+      "value":51.43
+    },
+    {
+      "id":46,
+      "title":"30 Beats",
+      "date":"2022-08-07 15:45:27",
+      "value":945.91
+    },
+    {
+      "id":47,
+      "title":"Ama lur (Tierra Madre)",
+      "date":"2022-04-16 21:10:50",
+      "value":953.23
+    },
+    {
+      "id":48,
+      "title":"Altered States",
+      "date":"2021-11-08 11:21:10",
+      "value":695.52
+    },
+    {
+      "id":49,
+      "title":"Sisterhood of the Traveling Pants, The",
+      "date":"2021-10-22 08:28:47",
+      "value":882.11
+    },
+    {
+      "id":50,
+      "title":"Almost Married",
+      "date":"2022-03-20 17:55:15",
+      "value":499.37
+    }
+  ]
+}
+
+{
+  "EnergyFlow":{
+    "date":"2022-07-29 22:59:55",
+    "data":[
       {
-        "id": 1,
-        "date": "2022-08-16 07:32:30",
-        "value": 20
-      }, {
-        "id": 2,
-        "date": "2022-10-09 23:04:20",
-        "value": 57
-      }, {
-        "id": 3,
-        "date": "2022-01-28 10:34:05",
-        "value": 51
-      }, {
-        "id": 4,
-        "date": "2021-11-06 15:05:18",
-        "value": 30
-      }, {
-        "id": 5,
-        "date": "2022-07-04 12:11:58",
-        "value": 74
-      }, {
-        "id": 6,
-        "date": "2021-12-01 05:18:14",
-        "value": 82
-      }, {
-        "id": 7,
-        "date": "2022-06-18 03:11:12",
-        "value": 54
-      }, {
-        "id": 8,
-        "date": "2021-11-13 02:01:09",
-        "value": 73
-      }, {
-        "id": 9,
-        "date": "2022-08-05 14:00:22",
-        "value": 23
-      }, {
-        "id": 10,
-        "date": "2021-10-21 18:45:14",
-        "value": 71
-      }, {
-        "id": 11,
-        "date": "2022-08-01 15:35:43",
-        "value": 64
-      }, {
-        "id": 12,
-        "date": "2021-11-17 11:31:56",
-        "value": 72
-      }, {
-        "id": 13,
-        "date": "2022-09-29 06:46:30",
-        "value": 39
-      }, {
-        "id": 14,
-        "date": "2022-08-18 07:36:11",
-        "value": 59
-      }, {
-        "id": 15,
-        "date": "2022-10-05 13:48:27",
-        "value": 62
-      }, {
-        "id": 16,
-        "date": "2022-06-30 08:21:49",
-        "value": 19
-      }, {
-        "id": 17,
-        "date": "2022-10-16 14:39:43",
-        "value": 27
-      }, {
-        "id": 18,
-        "date": "2022-03-21 23:58:56",
-        "value": 73
-      }, {
-        "id": 19,
-        "date": "2022-02-14 18:50:51",
-        "value": 41
-      }, {
-        "id": 20,
-        "date": "2021-11-27 08:43:59",
-        "value": 24
-      }, {
-        "id": 21,
-        "date": "2022-03-02 14:17:51",
-        "value": 58
-      }, {
-        "id": 22,
-        "date": "2022-04-06 12:12:35",
-        "value": 74
-      }, {
-        "id": 23,
-        "date": "2022-02-11 04:10:19",
-        "value": 8
-      }, {
-        "id": 24,
-        "date": "2021-11-30 20:28:13",
-        "value": 54
-      }, {
-        "id": 25,
-        "date": "2022-10-01 18:05:24",
-        "value": 45
-      }      
+        "title": "Solar Panel 1",
+        "value": "100.02"
+      },
+      {
+        "title": "Solar Panel 2",
+        "value": "150.02"
+      }
     ]
   }
+}
