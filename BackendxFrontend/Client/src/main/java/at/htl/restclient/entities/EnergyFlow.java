@@ -18,7 +18,7 @@ public class EnergyFlow {
     public String date;
 
     @Column
-    public String state;
+    public Integer state;
 
     @OneToMany(mappedBy = "energyflow", fetch = FetchType.EAGER)
     Set<Pvpower> pvpowers = new HashSet<>();

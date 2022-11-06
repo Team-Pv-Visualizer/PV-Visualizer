@@ -18,6 +18,8 @@ import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.PvpowerService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import static at.htl.restclient.controller.EnergyFlowController.getFroniusIsOn;
+
 @Path("/Pvpower")
 @Produces(MediaType.APPLICATION_JSON)
 public class PvpowerController {
@@ -29,37 +31,43 @@ public class PvpowerController {
 
     @GET
     public Response data() {
-        List<Pvpower> posts = new ArrayList<>(0);
-        try {
-            posts = pvpowerService.getAll();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        double maxValue = 0;
-        double firstValue = 0;
-        double nextValue = 0;
-
-        for (int i = 0; i < posts.size(); i++){
-            if(firstValue == 0){
-                firstValue = posts.get(i).value;
-                maxValue = firstValue;
+        Boolean froniusIsOn = getFroniusIsOn();
+        if(froniusIsOn == true){
+            List<Pvpower> posts = new ArrayList<>(0);
+            try {
+                posts = pvpowerService.getAll();
+            } catch(Exception e) {
+                e.printStackTrace();
             }
-            else{
-                nextValue = posts.get(i).value;
-                if(nextValue > maxValue)
-                    maxValue = nextValue;
+
+            double maxValue = 0;
+            double firstValue = 0;
+            double nextValue = 0;
+
+            for (int i = 0; i < posts.size(); i++){
+                if(firstValue == 0){
+                    firstValue = posts.get(i).value;
+                    maxValue = firstValue;
+                }
+                else{
+                    nextValue = posts.get(i).value;
+                    if(nextValue > maxValue)
+                        maxValue = nextValue;
+                }
             }
+
+            posts.forEach(x -> crud.add(x));
+
+            Statistic update = new Statistic();
+            update.maxValueForToday = maxValue;
+            LocalDate localDate = LocalDate.now();
+            update.date = localDate.toString();
+            crud.add(update);
+
+            return Response.ok(posts).build();
         }
-
-        posts.forEach(x -> crud.add(x));
-
-        Statistic update = new Statistic();
-        update.maxValueForToday = maxValue;
-        LocalDate localDate = LocalDate.now();
-        update.date = localDate.toString();
-        crud.add(update);
-
-        return Response.ok(posts).build();
+        else{
+            return Response.ok().build();
+        }
     }
 }

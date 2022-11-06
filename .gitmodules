@@ -1,0 +1,3 @@
+[submodule "BackendxFrontend/pvv_website/themes/ananke"]
+	path = BackendxFrontend/pvv_website/themes/ananke
+	url = https://github.com/theNewDynamic/gohugo-theme-ananke.git

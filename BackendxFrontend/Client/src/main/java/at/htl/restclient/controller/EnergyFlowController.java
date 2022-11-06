@@ -23,6 +23,7 @@ public class EnergyFlowController {
 
     @Inject
     CRUDOperations crud;
+    static Boolean froniusIsOn = true;
 
     @GET
     public Response data() {
@@ -33,6 +34,12 @@ public class EnergyFlowController {
             e.printStackTrace();
         }
         crud.add(post);
+        if(post.state == 0)
+            froniusIsOn = false;
+
         return Response.ok(post).build();
+    }
+    public static Boolean getFroniusIsOn(){
+        return froniusIsOn;
     }
 }
