@@ -11,8 +11,7 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
-//@RegisterRestClient(baseUri = "https://mockend.com/Toni2735/Toni2735/Pvpower")
-@RegisterRestClient
+@RegisterRestClient(baseUri = "http://localhost:3004/Pvpower")
 public interface PvpowerService {
     @GET
     List<Pvpower> getAll();

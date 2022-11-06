@@ -9,13 +9,16 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Energyflow {
+public class EnergyFlow {
 
     @Id
     public Long id;
 
     @Column
     public String date;
+
+    @Column
+    public String state;
 
     @OneToMany(mappedBy = "energyflow", fetch = FetchType.EAGER)
     Set<Pvpower> pvpowers = new HashSet<>();

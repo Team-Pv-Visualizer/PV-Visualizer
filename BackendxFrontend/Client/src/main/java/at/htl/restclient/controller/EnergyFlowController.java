@@ -10,31 +10,29 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import at.htl.restclient.entities.Energyflow;
-import at.htl.restclient.entities.Pvpower;
+import at.htl.restclient.entities.EnergyFlow;
 import at.htl.restclient.genericoperations.CRUDOperations;
-import at.htl.restclient.service.EnergyflowService;
-import at.htl.restclient.service.PvpowerService;
+import at.htl.restclient.service.EnergyFlowService;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-@Path("/energyflow")
+@Path("/EnergyFlow")
 @Produces(MediaType.APPLICATION_JSON)
-public class EnergyflowController {
+public class EnergyFlowController {
     @RestClient
-    EnergyflowService energyflowService;
+    EnergyFlowService energyflowService;
 
     @Inject
     CRUDOperations crud;
 
     @GET
     public Response data() {
-        List<Energyflow> posts = new ArrayList<>(0);
+        EnergyFlow post = new EnergyFlow();
         try {
-            posts = energyflowService.getAll();
+            post = energyflowService.getAll();
         } catch(Exception e) {
             e.printStackTrace();
         }
-        posts.forEach(x -> crud.add(x));
-        return Response.ok(posts).build();
+        crud.add(post);
+        return Response.ok(post).build();
     }
 }

@@ -7,14 +7,12 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Pvpower {
+public class Statistic {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     @Column
-    public String title;
+    public Double maxValueForToday;
     @Column
-    public Double value;
-    @ManyToOne
-    @JoinColumn(name = "energyflowId")
-    EnergyFlow energyflow;
+    public String date;
 }

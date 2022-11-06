@@ -1,0 +1,33 @@
+{
+  "EnergyFlow":{ 
+    "id": 1, 
+    "date": "2022-11-06",
+    "state": "1"
+  },
+  "Pvpower": [
+    { 
+      "id": 1, 
+      "title": "Solar Panel1",
+      "value": "1243.34",
+      "energyflowId": 1 
+    },
+    { 
+      "id": 2, 
+      "title": "Solar Panel1",
+      "value": "100",
+      "energyflowId": 1 
+    },
+    { 
+      "id": 3, 
+      "title": "Solar Panel1",
+      "value": "40",
+      "energyflowId": 1 
+    },
+    { 
+      "id": 4, 
+      "title": "Solar Panel1",
+      "value": "546.65",
+      "energyflowId": 1 
+    }
+  ]
+}
