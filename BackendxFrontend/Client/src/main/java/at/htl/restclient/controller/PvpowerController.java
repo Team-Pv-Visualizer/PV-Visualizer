@@ -6,12 +6,15 @@ import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import at.htl.restclient.entities.EnergyFlow;
 import at.htl.restclient.entities.Pvpower;
 import at.htl.restclient.entities.Statistic;
 import at.htl.restclient.genericoperations.CRUDOperations;
@@ -36,6 +39,10 @@ public class PvpowerController {
             List<Pvpower> posts = new ArrayList<>(0);
             try {
                 posts = pvpowerService.getAll();
+                for (var post : posts){
+                    var ef = getById(post.energyflowId);
+                    post.setEnergyflow(ef);
+                }
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -69,5 +76,12 @@ public class PvpowerController {
         else{
             return Response.ok().build();
         }
+
+    }
+    @Inject
+    EntityManager em;
+    @Transactional
+    private EnergyFlow getById(Long id){
+        return em.createQuery("select x from EnergyFlow x where x.id = :id", EnergyFlow.class).setParameter("id", id).getSingleResult();
     }
 }

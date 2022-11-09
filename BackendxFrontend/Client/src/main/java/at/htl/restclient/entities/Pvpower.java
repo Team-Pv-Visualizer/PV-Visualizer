@@ -14,6 +14,8 @@ public class Pvpower {
     public String title;
     @Column
     public Double value;
+    @Transient
+    public Long energyflowId;
     @ManyToOne
     @JoinColumn(name = "energyflowId")
     EnergyFlow energyflow;

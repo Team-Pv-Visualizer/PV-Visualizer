@@ -1,6 +1,8 @@
 package at.htl.restclient.entities;
 
 import lombok.*;
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
