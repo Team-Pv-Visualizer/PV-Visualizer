@@ -32,6 +32,9 @@ public class PvpowerController {
     @Inject
     CRUDOperations crud;
 
+    @Inject
+    EntityManager em;
+
     @GET
     public Response data() {
         Boolean froniusIsOn = getFroniusIsOn();
@@ -78,8 +81,6 @@ public class PvpowerController {
         }
 
     }
-    @Inject
-    EntityManager em;
     @Transactional
     private EnergyFlow getById(Long id){
         return em.createQuery("select x from EnergyFlow x where x.id = :id", EnergyFlow.class).setParameter("id", id).getSingleResult();
