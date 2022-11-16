@@ -3,6 +3,7 @@ package at.htl.restclient.controller;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -52,15 +53,17 @@ public class DataController {
             TodayConsumption update = DailyConsumption(posts);
 
             posts.forEach(x -> crud.add(x));
+
             if(counter == 0){
                 crud.add(update);
                 counter++;
             }else {
-                if(controlColumn(update.value) != true){
+                MonthlyConsumption();
+                if(compareColumn(update.value) == false) {
                     crud.add(update);
                 }
-                //MonthlyConsumption();
             }
+
             return Response.ok(posts).build();
         }
         else{
@@ -97,19 +100,21 @@ public class DataController {
 
         return update;
     }
-    private Boolean controlColumn(Double value){
+    private Boolean compareColumn(Double value){
         Boolean duplicate = false;
-        var x = em.createQuery("select x from TodayConsumption x where x.value = :value", TodayConsumption.class).setParameter("value", value).getResultList();
-        if(x.ls == value.toString()){
+        var x = em.createQuery("select tc.value from TodayConsumption tc order by tc.id desc", Double.class).setMaxResults(1).getSingleResult();
+        if(Objects.equals(x, value)){
             duplicate = true;
-            x.l
         }
+
         return duplicate;
     }
     public void MonthlyConsumption(){
         MonthConsumption update = new MonthConsumption();
-        var x = em.createQuery("select x.value from TodayConsumption x", TodayConsumption.class).getResultList();
-        var res = x.stream().mapToDouble(i -> i.value).sum();
+        var x = em.createQuery("select x.value from TodayConsumption x", Double.class).getResultList();
+        System.out.println(x);
+        var res = x.stream().mapToDouble(i -> i).sum();
+        System.out.println(res);
         LocalDate localDate = LocalDate.now();
         update.date = localDate.toString();
         update.value = res;

@@ -1,5 +1,6 @@
 package at.htl.restclient.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
 
@@ -23,5 +24,6 @@ public class Status {
 
     @OneToOne
     @JoinColumn(name = "headId")
+    @JsonBackReference
     public Head head;
 }

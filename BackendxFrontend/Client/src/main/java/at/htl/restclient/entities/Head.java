@@ -1,5 +1,6 @@
 package at.htl.restclient.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,9 +18,11 @@ public class Head {
     @Column
     public String timeStamp;
 
-    @OneToMany(mappedBy = "head", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "head", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     Set<Data> data = new HashSet<>();
 
-    @OneToOne(mappedBy = "head", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "head", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
     public Status status;
 }
