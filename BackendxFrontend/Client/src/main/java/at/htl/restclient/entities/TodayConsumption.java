@@ -7,16 +7,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Pvpower {
+public class TodayConsumption {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     @Column
-    public String title;
-    @Column
     public Double value;
-    @Transient
-    public Long energyflowId;
-    @ManyToOne
-    @JoinColumn(name = "energyflowId")
-    EnergyFlow energyflow;
+    @Column
+    public String date;
 }

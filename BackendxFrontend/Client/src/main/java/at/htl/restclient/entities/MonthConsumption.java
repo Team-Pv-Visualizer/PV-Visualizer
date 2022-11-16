@@ -7,12 +7,13 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Statistic {
+public class MonthConsumption {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     @Column
-    public Double maxValueForToday;
+    public Double value;
     @Column
     public String date;
 }

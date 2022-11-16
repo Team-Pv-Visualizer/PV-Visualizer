@@ -1,0 +1,41 @@
+{
+    "Head":{ 
+      "id": 1, 
+      "timeStamp": "2022-11-15"
+    },
+    "Status":{
+        "code": "0",
+        "reason": "",
+        "userMessage": "",
+        "headId": 1 
+    },
+    "Data": [
+      { 
+        "title": "Solar Panel",
+        "value": "1500",
+        "unit": "W",
+        "headId": 1 
+      },
+      { 
+        "title": "Solar Panel2",
+        "value": "100",
+        "unit": "W",
+        "headId": 1 
+      },
+      { 
+        "title": "Solar Panel3",
+        "value": "40",
+        "unit": "W",
+        "headId": 1 
+      },
+      { 
+        "title": "Solar Panel4",
+        "value": "546.65",
+        "unit": "W",
+        "headId": 1 
+      }
+    ]
+  }
+  
+  
+  
