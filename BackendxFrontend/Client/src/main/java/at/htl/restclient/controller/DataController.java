@@ -17,6 +17,7 @@ import at.htl.restclient.entities.MonthConsumption;
 import at.htl.restclient.entities.TodayConsumption;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.DataService;
+import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import static at.htl.restclient.controller.StatusController.getFroniusIsOn;
@@ -35,6 +36,12 @@ public class DataController {
     @Inject
     EntityManager em;
     static Integer counter = 0;
+
+    @Scheduled(every="120s")
+    public void callUpMethod(){
+        System.out.println("Call up Data");
+        data();
+    }
     @GET
     public Response data() {
         Boolean froniusIsOn = getFroniusIsOn();
@@ -112,9 +119,7 @@ public class DataController {
     public void MonthlyConsumption(){
         MonthConsumption update = new MonthConsumption();
         var x = em.createQuery("select x.value from TodayConsumption x", Double.class).getResultList();
-        System.out.println(x);
         var res = x.stream().mapToDouble(i -> i).sum();
-        System.out.println(res);
         LocalDate localDate = LocalDate.now();
         update.date = localDate.toString();
         update.value = res;

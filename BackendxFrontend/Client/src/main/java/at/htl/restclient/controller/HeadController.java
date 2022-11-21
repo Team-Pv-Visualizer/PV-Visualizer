@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import at.htl.restclient.entities.Head;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.HeadService;
+import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("/Head")
@@ -28,6 +29,12 @@ public class HeadController {
     @Inject
     EntityManager em;
     static Integer counter = 0;
+
+    @Scheduled(every="60s")
+    public void callUpMethod(){
+        System.out.println("Call up Head");
+        data();
+    }
     @GET
     public Response data() {
         Head post = new Head();

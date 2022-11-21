@@ -10,6 +10,7 @@ import at.htl.restclient.entities.Head;
 import at.htl.restclient.entities.Status;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.StatusService;
+import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 @Path("/Status")
@@ -28,6 +29,12 @@ public class StatusController {
 
     static Boolean froniusIsOn = true;
     static Integer counter = 0;
+
+    @Scheduled(every="120s")
+    public void callUpMethod(){
+        System.out.println("Call up Status");
+        data();
+    }
     @GET
     public Response data() {
         Status post = new Status();
