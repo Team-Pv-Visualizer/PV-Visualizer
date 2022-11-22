@@ -2,6 +2,7 @@ package at.htl.restclient.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -65,7 +66,7 @@ public class DataController {
                 crud.add(update);
                 counter++;
             }else {
-                MonthlyConsumption();
+                //MonthlyConsumption();
                 if(compareColumn(update.value) == false) {
                     crud.add(update);
                 }
@@ -82,7 +83,7 @@ public class DataController {
     private Head getById(Long id){
         return em.createQuery("select x from Head x where x.id = :id", Head.class).setParameter("id", id).getSingleResult();
     }
-
+    //Methode anpassen wenn datum schon erstellt worden ist nur wert ändern
     public TodayConsumption DailyConsumption(List<Data> posts){
         double maxValue = 0;
         double firstValue = 0;
@@ -116,14 +117,16 @@ public class DataController {
 
         return duplicate;
     }
+
+    //Methode anpassen
     public void MonthlyConsumption(){
         MonthConsumption update = new MonthConsumption();
-        var x = em.createQuery("select x.value from TodayConsumption x", Double.class).getResultList();
-        var res = x.stream().mapToDouble(i -> i).sum();
-        LocalDate localDate = LocalDate.now();
-        update.date = localDate.toString();
-        update.value = res;
+        var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date) ", MonthConsumption.class).getResultList();
 
+        for (var post : x){
+            update.date = post.date;
+            update.value = post.value;
+        }
         crud.add(update);
     }
 }
