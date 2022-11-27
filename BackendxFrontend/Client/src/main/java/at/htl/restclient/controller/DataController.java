@@ -83,7 +83,18 @@ public class DataController {
     private Head getById(Long id){
         return em.createQuery("select x from Head x where x.id = :id", Head.class).setParameter("id", id).getSingleResult();
     }
+
     //Methode anpassen wenn datum schon erstellt worden ist nur wert ändern
+    private Boolean compareColumn(Double value){
+        Boolean duplicate = false;
+        var x = em.createQuery("select tc.value from TodayConsumption tc order by tc.id desc", Double.class).setMaxResults(1).getSingleResult();
+        if(Objects.equals(x, value)){
+            duplicate = true;
+        }
+
+        return duplicate;
+    }
+
     public TodayConsumption DailyConsumption(List<Data> posts){
         double maxValue = 0;
         double firstValue = 0;
@@ -107,15 +118,6 @@ public class DataController {
         update.date = localDate.toString();
 
         return update;
-    }
-    private Boolean compareColumn(Double value){
-        Boolean duplicate = false;
-        var x = em.createQuery("select tc.value from TodayConsumption tc order by tc.id desc", Double.class).setMaxResults(1).getSingleResult();
-        if(Objects.equals(x, value)){
-            duplicate = true;
-        }
-
-        return duplicate;
     }
 
     //Methode anpassen
