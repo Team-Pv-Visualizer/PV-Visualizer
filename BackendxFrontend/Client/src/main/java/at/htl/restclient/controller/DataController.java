@@ -2,7 +2,6 @@ package at.htl.restclient.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +13,7 @@ import javax.ws.rs.core.*;
 
 import at.htl.restclient.entities.Head;
 import at.htl.restclient.entities.Data;
-import at.htl.restclient.entities.MonthConsumption;
+import at.htl.restclient.entities.MonthlyConsumption;
 import at.htl.restclient.entities.TodayConsumption;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.DataService;
@@ -96,8 +95,8 @@ public class DataController {
     }
 
     public TodayConsumption DailyConsumption(List<Data> posts){
-        double maxValue = 0;
         double firstValue = 0;
+        double maxValue = 0;
         double nextValue = 0;
 
         for (int i = 0; i < posts.size(); i++){
@@ -122,8 +121,8 @@ public class DataController {
 
     //Methode anpassen
     public void MonthlyConsumption(){
-        MonthConsumption update = new MonthConsumption();
-        var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date) ", MonthConsumption.class).getResultList();
+        MonthlyConsumption update = new MonthlyConsumption();
+        var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH( tc.date)", MonthlyConsumption.class).getResultList();
 
         for (var post : x){
             update.date = post.date;

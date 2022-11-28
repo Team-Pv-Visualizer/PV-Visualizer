@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class MonthConsumption {
+public class MonthlyConsumption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
