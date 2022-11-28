@@ -114,7 +114,6 @@ public class DataController {
             }
         }
 
-
         TodayConsumption update = new TodayConsumption();
         update.value = value;
         LocalDate localDate = LocalDate.now();
