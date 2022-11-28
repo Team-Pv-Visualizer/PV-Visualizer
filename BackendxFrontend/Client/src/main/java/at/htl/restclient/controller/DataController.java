@@ -14,7 +14,7 @@ import javax.ws.rs.core.*;
 
 import at.htl.restclient.entities.Head;
 import at.htl.restclient.entities.Data;
-import at.htl.restclient.entities.MonthConsumption;
+import at.htl.restclient.entities.MonthlyConsumption;
 import at.htl.restclient.entities.TodayConsumption;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.DataService;
@@ -155,7 +155,7 @@ public class DataController {
 
     //Methode anpassen
     public void MonthlyConsumption(){
-        MonthConsumption update = new MonthConsumption();
+        MonthlyConsumption update = new MonthlyConsumption();
         var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)", Object.class).getResultList();
         /*int lastIndex = x.size();
         update.date = x.get(1);
