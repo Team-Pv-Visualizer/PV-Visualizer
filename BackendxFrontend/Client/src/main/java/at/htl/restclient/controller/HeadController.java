@@ -30,6 +30,8 @@ public class HeadController {
     EntityManager em;
     static Integer counter = 0;
 
+    static String date;
+
     @Scheduled(every="60s")
     public void callUpMethod(){
         System.out.println("Call up Head");
@@ -43,12 +45,12 @@ public class HeadController {
         } catch(Exception e) {
             e.printStackTrace();
         }
-
         if(counter == 0){
             crud.add(post);
             counter++;
         }
         else{
+            date = post.timeStamp;
             if(controlColumn(post.timeStamp) != true){
                 crud.add(post);
             }
@@ -66,4 +68,9 @@ public class HeadController {
         }
         return duplicate;
     }
+
+    public static String getDate(){
+        return date;
+    }
+
 }

@@ -21,6 +21,7 @@ import at.htl.restclient.service.DataService;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import static at.htl.restclient.controller.HeadController.getDate;
 import static at.htl.restclient.controller.StatusController.getFroniusIsOn;
 
 @Path("/Data")
@@ -83,10 +84,44 @@ public class DataController {
     private Head getById(Long id){
         return em.createQuery("select x from Head x where x.id = :id", Head.class).setParameter("id", id).getSingleResult();
     }
-    //Methode anpassen wenn datum schon erstellt worden ist nur wert ändern
+
     public TodayConsumption DailyConsumption(List<Data> posts){
-        double maxValue = 0;
+        /*double value = 0;
+
+        if(counter == 0){
+            for(int i = 0; i < posts.size(); i++){
+                value += posts.get(i).value;
+            }
+        }
+        else{
+            var oldDate = em.createQuery("select tc.timeStamp from Head tc order by tc.id desc", String.class).setMaxResults(1).getSingleResult();
+            var newDate = getDate();
+            if(newDate == oldDate){
+                var x = em.createQuery("select tc.id, tc.date, tc.value from TodayConsumption tc order by tc.id desc", TodayConsumption.class).setMaxResults(1).getSingleResult();
+                LocalDate localDate = LocalDate.now();
+                if(localDate.toString() == x.date){
+                    for(int i = 0; i < posts.size(); i++){
+                        value += posts.get(i).value;
+                    }
+                    value += x.value;
+                    crud.delete(x);
+                }
+                else{
+                    for(int i = 0; i < posts.size(); i++){
+                        value += posts.get(i).value;
+                    }
+                }
+            }
+        }
+
+
+        TodayConsumption update = new TodayConsumption();
+        update.value = value;
+        LocalDate localDate = LocalDate.now();
+        update.date = localDate.toString();*/
+
         double firstValue = 0;
+        double maxValue = 0;
         double nextValue = 0;
 
         for (int i = 0; i < posts.size(); i++){
@@ -121,12 +156,13 @@ public class DataController {
     //Methode anpassen
     public void MonthlyConsumption(){
         MonthConsumption update = new MonthConsumption();
-        var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date) ", MonthConsumption.class).getResultList();
+        var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)", Object.class).getResultList();
+        /*int lastIndex = x.size();
+        update.date = x.get(1);
+        update.value = x.get(lastIndex).value;
+        crud.add(update);*/
 
-        for (var post : x){
-            update.date = post.date;
-            update.value = post.value;
-        }
-        crud.add(update);
+        System.out.println(x.get(0));
+        System.out.println(x.get(1));
     }
 }
