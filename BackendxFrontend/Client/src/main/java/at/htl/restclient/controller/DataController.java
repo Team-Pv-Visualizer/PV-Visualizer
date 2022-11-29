@@ -20,10 +20,11 @@ import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.DataService;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-
-import static at.htl.restclient.controller.HeadController.getDate;
 import static at.htl.restclient.controller.StatusController.getFroniusIsOn;
 
+/**
+ * Process the data and store the processed data in the database
+ */
 @Path("/Data")
 @Produces(MediaType.APPLICATION_JSON)
 public class DataController {
@@ -39,11 +40,18 @@ public class DataController {
     EntityManager em;
     static Integer counter = 0;
 
+    /**
+     * Call up the method data every 120sec
+     */
     @Scheduled(every="120s")
     public void callUpMethod(){
-        System.out.println("Call up Data");
         data();
     }
+
+    /**
+     * Call up Service and get Json File and process new data
+     * @return response code and new Data Json
+     */
     @GET
     public Response data() {
         Boolean froniusIsOn = getFroniusIsOn();
@@ -80,11 +88,22 @@ public class DataController {
         }
 
     }
+
+    /**
+     * Get per Id the Head Entity
+     * @param id Head Entity
+     * @return Head Entity
+     */
     @Transactional
     private Head getById(Long id){
         return em.createQuery("select x from Head x where x.id = :id", Head.class).setParameter("id", id).getSingleResult();
     }
 
+    /**
+     * Process the Date and generate new Row with data and value
+     * @param posts new List - Data
+     * @return new row
+     */
     public TodayConsumption DailyConsumption(List<Data> posts){
         /*double value = 0;
 
@@ -142,6 +161,12 @@ public class DataController {
 
         return update;
     }
+
+    /**
+     * Compare two Values if the newer one exist already
+     * @param value new value
+     * @return Boolean value if the newer one is already created
+     */
     private Boolean compareColumn(Double value){
         Boolean duplicate = false;
         var x = em.createQuery("select tc.value from TodayConsumption tc order by tc.id desc", Double.class).setMaxResults(1).getSingleResult();
@@ -152,7 +177,9 @@ public class DataController {
         return duplicate;
     }
 
-    //Methode anpassen
+    /**
+     * Calculated MonthlyConsumption with TodayConsumption
+     */
     public void MonthlyConsumption(){
         MonthlyConsumption update = new MonthlyConsumption();
         var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)", Object.class).getResultList();
@@ -160,8 +187,5 @@ public class DataController {
         update.date = x.get(1);
         update.value = x.get(lastIndex).value;
         crud.add(update);*/
-
-        System.out.println(x.get(0));
-        System.out.println(x.get(1));
     }
 }

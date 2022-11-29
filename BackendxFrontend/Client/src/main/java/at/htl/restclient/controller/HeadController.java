@@ -15,6 +15,9 @@ import at.htl.restclient.service.HeadService;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+/**
+ * Process the data and store the processed data in the database
+ */
 @Path("/Head")
 @Produces(MediaType.APPLICATION_JSON)
 public class HeadController {
@@ -32,11 +35,19 @@ public class HeadController {
 
     static String date;
 
+    /**
+     * Call up the method data every 60sec
+     */
     @Scheduled(every="60s")
     public void callUpMethod(){
         System.out.println("Call up Head");
         data();
     }
+
+    /**
+     * Call up Service and get Json File and process new data
+     * @return response code and new Head Json
+     */
     @GET
     public Response data() {
         Head post = new Head();
@@ -59,6 +70,11 @@ public class HeadController {
         return Response.ok(post).build();
     }
 
+    /**
+     * Compare two timeStamps if the newer one exist already
+     * @param timestamp new timeStamp
+     * @return Boolean value if the newer one is already created
+     */
     @Transactional
     private Boolean controlColumn(String timestamp){
         Boolean duplicate = false;
@@ -69,8 +85,9 @@ public class HeadController {
         return duplicate;
     }
 
+    /*
     public static String getDate(){
         return date;
-    }
+    }*/
 
 }

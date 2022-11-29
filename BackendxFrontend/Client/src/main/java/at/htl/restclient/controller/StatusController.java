@@ -13,6 +13,9 @@ import at.htl.restclient.service.StatusService;
 import io.quarkus.scheduler.Scheduled;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+/**
+ * Process the data and store the processed data in the database
+ */
 @Path("/Status")
 @Produces(MediaType.APPLICATION_JSON)
 public class StatusController {
@@ -30,11 +33,19 @@ public class StatusController {
     static Boolean froniusIsOn = true;
     static Integer counter = 0;
 
+    /**
+     * Call up the method data every 120sec
+     */
     @Scheduled(every="120s")
     public void callUpMethod(){
         System.out.println("Call up Status");
         data();
     }
+
+    /**
+     * Call up Service and get Json File and process new data
+     * @return response code and new Status Json
+     */
     @GET
     public Response data() {
         Status post = new Status();
@@ -59,6 +70,10 @@ public class StatusController {
 
         return Response.ok(post).build();
     }
+    /**
+     * Compare two timeStamps if the newer one exist already
+     * @return Boolean value if the newer one is already created
+     */
     @Transactional
     private Boolean controlColumn(){
         Boolean duplicate = false;
@@ -68,11 +83,21 @@ public class StatusController {
         }
         return duplicate;
     }
+
+    /**
+     * Get per Id the Head Entity
+     * @param id Head Entity
+     * @return Head Entity
+     */
     @Transactional
     private Head getById(Long id){
         return em.createQuery("select x from Head x where x.id = :id", Head.class).setParameter("id", id).getSingleResult();
     }
-    
+
+    /**
+     * Get FroniusIsOn Boolean Value
+     * @return Boolean Value
+     */
     public static Boolean getFroniusIsOn(){
         return froniusIsOn;
     }
