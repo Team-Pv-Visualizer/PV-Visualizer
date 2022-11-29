@@ -1,0 +1,6 @@
+<map id="at.htl.restclient.entities.Data" name="at.htl.restclient.entities.Data">
+<area shape="rect" id="node1" title="Data Entity for Json File &#45; Data List of all Devices." alt="" coords="5,206,215,233"/>
+<area shape="rect" id="node2" href="$classat_1_1htl_1_1restclient_1_1entities_1_1Head.html" title="Head Entity for Json File &#45; Head for timeStamp and identify the json file." alt="" coords="155,109,367,136"/>
+<area shape="rect" id="node4" href="$classat_1_1htl_1_1restclient_1_1entities_1_1Status.html" title="Status Entity for Json File &#45; Status of Fronius API." alt="" coords="239,199,418,240"/>
+<area shape="rect" id="node3" title=" " alt="" coords="153,5,368,47"/>
+</map>
