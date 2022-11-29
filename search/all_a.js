@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['status_28',['Status',['../classat_1_1htl_1_1restclient_1_1entities_1_1Status.html',1,'at::htl::restclient::entities']]],
-  ['status_29',['status',['../classat_1_1htl_1_1restclient_1_1entities_1_1Head.html#a38a5ad15b56309c92af3f91cfa963960',1,'at::htl::restclient::entities::Head']]],
-  ['statuscontroller_30',['StatusController',['../classat_1_1htl_1_1restclient_1_1controller_1_1StatusController.html',1,'at::htl::restclient::controller']]],
-  ['statusservice_31',['StatusService',['../interfaceat_1_1htl_1_1restclient_1_1service_1_1StatusService.html',1,'at::htl::restclient::service']]]
+  ['timestamp_29',['timeStamp',['../classat_1_1htl_1_1restclient_1_1entities_1_1Head.html#a1685485b2140cdac2c334c3b90332b90',1,'at::htl::restclient::entities::Head']]],
+  ['title_30',['title',['../classat_1_1htl_1_1restclient_1_1entities_1_1Data.html#a97bdd90d158233a4cafa1b8055c057d6',1,'at::htl::restclient::entities::Data']]],
+  ['todayconsumption_31',['TodayConsumption',['../classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html',1,'at::htl::restclient::entities']]]
 ];
