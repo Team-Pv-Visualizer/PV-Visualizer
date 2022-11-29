@@ -1,5 +1,5 @@
 PROJECT_NAME        = "PV-Visualizer"
-INPUT               = BackendxFrontend/Client
+INPUT               = BackendxFrontend/Client/src
 RECURSIVE           = YES
 OUTPUT_DIRECTORY    = docs
 OUTPUT_LANGUAGE     = English
