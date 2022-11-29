@@ -28,5 +28,4 @@ jobs:
       with:
         branch: publish
         folder: docs/html
-        target-folder: docs
 
