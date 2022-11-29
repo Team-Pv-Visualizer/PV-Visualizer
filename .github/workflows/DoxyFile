@@ -1,0 +1,12 @@
+PROJECT_NAME        = "PV-Visualizer"
+INPUT               = PV-Visualizer/BackendxFrontend/Client
+RECURSIVE           = YES
+OUTPUT_DIRECTORY    = docs
+OUTPUT_LANGUAGE     = English
+JAVADOC_BANNER      = YES
+USE_PDFLATEX        = YES
+PDF_HYPERLINKS      = YES
+INLINE_SOURCES      = YES
+SOURCE_BROWSER      = YES
+AUTOLINK_SUPPORT    = NO
+JAVADOC_AUTOBRIEF   = YES
