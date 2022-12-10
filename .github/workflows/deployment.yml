@@ -42,7 +42,6 @@ jobs:
     - name: test ssh
       run: |
         ssh server ls -l
-
     - name: deploy to server
       run: |
         scp -r * server:/var/www/html 
