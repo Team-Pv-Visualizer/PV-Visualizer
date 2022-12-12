@@ -112,14 +112,13 @@ public class DataController {
             maxValue += posts.get(i).value;
         }
         maxValue /= 1000;
-        TodayConsumption update = new TodayConsumption();
-        update.value = maxValue;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        update.date = formatter.format(date);
-
-        return update;
-    }
+            TodayConsumption update = new TodayConsumption();
+            update.value = maxValue;
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            update.date = formatter.format(date);
+            return update;
+        }
 
     /**
      * Compare two Values if the newer one exist already
@@ -140,7 +139,7 @@ public class DataController {
      * Calculated MonthlyConsumption with TodayConsumption
      */
     /*public void MonthlyConsumption(){
-        MonthlyConsumption update = new MonthlyConsumption();
+        /*MonthlyConsumption update = new MonthlyConsumption();
         var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)", Object.class).getResultList();
         int lastIndex = x.size();
         update.date = x.get(1);
