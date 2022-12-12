@@ -71,173 +71,130 @@ $(function() {
 <div class="contents">
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="keyword">package </span>at.htl.restclient.controller;</div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">import</span> java.time.LocalDate;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.util.ArrayList;</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> java.util.Date;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> java.util.List;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">import</span> java.util.Objects;</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">import</span> javax.inject.Inject;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">import</span> javax.persistence.EntityManager;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> javax.transaction.Transactional;</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">import</span> javax.ws.rs.*;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">import</span> javax.ws.rs.core.*;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.Head;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.Data;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.MonthlyConsumption;</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.TodayConsumption;</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">import</span> at.htl.restclient.genericoperations.CRUDOperations;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">import</span> at.htl.restclient.service.DataService;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">import</span> io.quarkus.scheduler.Scheduled;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">import</span> org.eclipse.microprofile.rest.client.inject.RestClient;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">import</span> <span class="keyword">static</span> at.htl.restclient.controller.StatusController.getFroniusIsOn;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;@Path(<span class="stringliteral">&quot;/Data&quot;</span>)</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;@Produces(MediaType.APPLICATION_JSON)</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">   30</a></span>&#160;public class <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">DataController</a> {</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    @Inject</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    @RestClient</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="interfaceat_1_1htl_1_1restclient_1_1service_1_1DataService.html">DataService</a> dataService;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    @Inject</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classat_1_1htl_1_1restclient_1_1genericoperations_1_1CRUDOperations.html">CRUDOperations</a> crud;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    @Inject</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    EntityManager em;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">static</span> Integer counter = 0;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    @Scheduled(every=<span class="stringliteral">&quot;120s&quot;</span>)</div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a843c5dfb0ffc6ed503184911d0e84cb9">   47</a></span>&#160;    public <span class="keywordtype">void</span> callUpMethod(){</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        data();</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    }</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    @GET</div>
-<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">   56</a></span>&#160;    <span class="keyword">public</span> Response <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">data</a>() {</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        Boolean froniusIsOn = getFroniusIsOn();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keywordflow">if</span>(froniusIsOn == <span class="keyword">true</span>){</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            List&lt;Data&gt; posts = <span class="keyword">new</span> ArrayList&lt;&gt;(0);</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <span class="keywordflow">try</span> {</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                posts = dataService.getAll();</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                <span class="keywordflow">for</span> (var post : posts){</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                    var ef = getById(post.headId);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    post.setHead(ef);</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                }</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            } <span class="keywordflow">catch</span>(Exception e) {</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;                e.printStackTrace();</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            }</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160; </div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> update = DailyConsumption(posts);</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            posts.forEach(x -&gt; crud.add(x));</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="keywordflow">if</span>(counter == 0){</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                crud.add(update);</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                counter++;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            }<span class="keywordflow">else</span> {</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                <span class="comment">//MonthlyConsumption();</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="keywordflow">if</span>(compareColumn(update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a>) == <span class="keyword">false</span>) {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                    crud.add(update);</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                }</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            }</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <span class="keywordflow">return</span> Response.ok(posts).build();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        <span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            <span class="keywordflow">return</span> Response.ok().build();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        }</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160; </div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    }</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160; </div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    @Transactional</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keyword">private</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1Head.html">Head</a> getById(Long <span class="keywordtype">id</span>){</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> em.createQuery(<span class="stringliteral">&quot;select x from Head x where x.id = :id&quot;</span>, <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1Head.html">Head</a>.class).setParameter(<span class="stringliteral">&quot;id&quot;</span>, <span class="keywordtype">id</span>).getSingleResult();</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    }</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00107"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">  107</a></span>&#160;    <span class="keyword">public</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">DailyConsumption</a>(List&lt;Data&gt; posts){</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;        <span class="comment">/*double value = 0;</span></div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="comment">        if(counter == 0){</span></div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;<span class="comment">            for(int i = 0; i &lt; posts.size(); i++){</span></div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="comment">                value += posts.get(i).value;</span></div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;<span class="comment">            }</span></div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="comment">        }</span></div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="comment">        else{</span></div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="comment">            var oldDate = em.createQuery(&quot;select tc.timeStamp from Head tc order by tc.id desc&quot;, String.class).setMaxResults(1).getSingleResult();</span></div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;<span class="comment">            var newDate = getDate();</span></div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;<span class="comment">            if(newDate == oldDate){</span></div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="comment">                var x = em.createQuery(&quot;select tc.id, tc.date, tc.value from TodayConsumption tc order by tc.id desc&quot;, TodayConsumption.class).setMaxResults(1).getSingleResult();</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="comment">                LocalDate localDate = LocalDate.now();</span></div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;<span class="comment">                if(localDate.toString() == x.date){</span></div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="comment">                    for(int i = 0; i &lt; posts.size(); i++){</span></div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="comment">                        value += posts.get(i).value;</span></div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="comment">                    }</span></div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="comment">                    value += x.value;</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;<span class="comment">                    crud.delete(x);</span></div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="comment">                }</span></div>
-<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;<span class="comment">                else{</span></div>
-<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;<span class="comment">                    for(int i = 0; i &lt; posts.size(); i++){</span></div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;<span class="comment">                        value += posts.get(i).value;</span></div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;<span class="comment">                    }</span></div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;<span class="comment">                }</span></div>
-<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;<span class="comment">            }</span></div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;<span class="comment">        }</span></div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="comment"></span> </div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;<span class="comment">        TodayConsumption update = new TodayConsumption();</span></div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;<span class="comment">        update.value = value;</span></div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;<span class="comment">        LocalDate localDate = LocalDate.now();</span></div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;<span class="comment">        update.date = localDate.toString();*/</span></div>
-<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;        <span class="keywordtype">double</span> firstValue = 0;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;        <span class="keywordtype">double</span> maxValue = 0;</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;        <span class="keywordtype">double</span> nextValue = 0;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; posts.size(); i++){</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;            <span class="keywordflow">if</span>(firstValue == 0){</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;                firstValue = posts.get(i).<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a>;</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                maxValue = firstValue;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;            }</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;            <span class="keywordflow">else</span>{</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;                nextValue = posts.get(i).value;</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;                <span class="keywordflow">if</span>(nextValue &gt; maxValue)</div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;                    maxValue = nextValue;</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;            }</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;        }</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160; </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> update = <span class="keyword">new</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a>();</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a> = maxValue;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        LocalDate localDate = LocalDate.now();</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;        update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#afc6bb3d48945636df803bc1b9e9cf962">date</a> = localDate.toString();</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160; </div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;        <span class="keywordflow">return</span> update;</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    }</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keyword">private</span> Boolean compareColumn(Double value){</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        Boolean duplicate = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        var x = em.createQuery(<span class="stringliteral">&quot;select tc.value from TodayConsumption tc order by tc.id desc&quot;</span>, Double.class).setMaxResults(1).getSingleResult();</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        <span class="keywordflow">if</span>(Objects.equals(x, value)){</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            duplicate = <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;        }</div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;        <span class="keywordflow">return</span> duplicate;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    }</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00183"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a9b92481d276602f281b02b184bbcc0e4">  183</a></span>&#160;    <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a9b92481d276602f281b02b184bbcc0e4">MonthlyConsumption</a>(){</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;        <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1MonthlyConsumption.html">MonthlyConsumption</a> update = <span class="keyword">new</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1MonthlyConsumption.html">MonthlyConsumption</a>();</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;        var x = em.createQuery(<span class="stringliteral">&quot;SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)&quot;</span>, Object.class).getResultList();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;        <span class="comment">/*int lastIndex = x.size();</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="comment">        update.date = x.get(1);</span></div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;<span class="comment">        update.value = x.get(lastIndex).value;</span></div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<span class="comment">        crud.add(update);*/</span></div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;    }</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
-<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">at.htl.restclient.controller.DataController</a></div><div class="ttdoc">Process the data and store the processed data in the database.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00030">DataController.java:30</a></div></div>
-<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_a964b66b831d6682de571b1319a731134"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">at.htl.restclient.controller.DataController.DailyConsumption</a></div><div class="ttdeci">TodayConsumption DailyConsumption(List&lt; Data &gt; posts)</div><div class="ttdoc">Process the Date and generate new Row with data and value.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00107">DataController.java:107</a></div></div>
-<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_a9b92481d276602f281b02b184bbcc0e4"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a9b92481d276602f281b02b184bbcc0e4">at.htl.restclient.controller.DataController.MonthlyConsumption</a></div><div class="ttdeci">void MonthlyConsumption()</div><div class="ttdoc">Calculated MonthlyConsumption with TodayConsumption.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00183">DataController.java:183</a></div></div>
-<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_aa95d28849fa102a7c4fec5f218c832ca"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">at.htl.restclient.controller.DataController.data</a></div><div class="ttdeci">Response data()</div><div class="ttdoc">Call up Service and get Json File and process new data.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00056">DataController.java:56</a></div></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keyword">import</span> java.text.SimpleDateFormat;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="keyword">import</span> java.time.LocalDateTime;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">import</span> java.util.ArrayList;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">import</span> java.util.Date;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">import</span> java.util.List;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">import</span> java.util.Objects;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">import</span> javax.inject.Inject;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">import</span> javax.persistence.EntityManager;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="keyword">import</span> javax.transaction.Transactional;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">import</span> javax.ws.rs.*;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">import</span> javax.ws.rs.core.*;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.Head;</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.Data;</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.MonthlyConsumption;</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keyword">import</span> at.htl.restclient.entities.TodayConsumption;</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">import</span> at.htl.restclient.genericoperations.CRUDOperations;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keyword">import</span> at.htl.restclient.service.DataService;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">import</span> io.quarkus.scheduler.Scheduled;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">import</span> org.eclipse.microprofile.rest.client.inject.RestClient;</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keyword">import</span> <span class="keyword">static</span> at.htl.restclient.controller.StatusController.getFroniusIsOn;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;@Path(<span class="stringliteral">&quot;/Data&quot;</span>)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;@Produces(MediaType.APPLICATION_JSON)</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">   31</a></span>&#160;public class <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">DataController</a> {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    @Inject</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    @RestClient</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="interfaceat_1_1htl_1_1restclient_1_1service_1_1DataService.html">DataService</a> dataService;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    @Inject</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="classat_1_1htl_1_1restclient_1_1genericoperations_1_1CRUDOperations.html">CRUDOperations</a> crud;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    @Inject</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    EntityManager em;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">static</span> Integer counter = 0;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    @Scheduled(every=<span class="stringliteral">&quot;120s&quot;</span>)</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a843c5dfb0ffc6ed503184911d0e84cb9">   48</a></span>&#160;    public <span class="keywordtype">void</span> callUpMethod(){</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        data();</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    @GET</div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">   57</a></span>&#160;    <span class="keyword">public</span> Response <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">data</a>() {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        Boolean froniusIsOn = getFroniusIsOn();</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span>(froniusIsOn == <span class="keyword">true</span>){</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            List&lt;Data&gt; posts = <span class="keyword">new</span> ArrayList&lt;&gt;(0);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">try</span> {</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                posts = dataService.getAll();</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">for</span> (var post : posts){</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                    var ef = getById(post.headId);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                    post.setHead(ef);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                }</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            } <span class="keywordflow">catch</span>(Exception e) {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;                e.printStackTrace();</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            }</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;            <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> update = DailyConsumption(posts);</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            posts.forEach(x -&gt; crud.add(x));</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            <span class="keywordflow">if</span>(counter == 0){</div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                crud.add(update);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                counter++;</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;            }<span class="keywordflow">else</span> {</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                <span class="comment">//MonthlyConsumption();</span></div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                <span class="keywordflow">if</span>(compareColumn(update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a>) == <span class="keyword">false</span>) {</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;                    crud.add(update);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;                }</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160; </div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;            <span class="keywordflow">return</span> Response.ok(posts).build();</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;        }</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordflow">else</span>{</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;            <span class="keywordflow">return</span> Response.ok().build();</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;        }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    }</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    @Transactional</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keyword">private</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1Head.html">Head</a> getById(Long <span class="keywordtype">id</span>){</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordflow">return</span> em.createQuery(<span class="stringliteral">&quot;select x from Head x where x.id = :id&quot;</span>, <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1Head.html">Head</a>.class).setParameter(<span class="stringliteral">&quot;id&quot;</span>, <span class="keywordtype">id</span>).getSingleResult();</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    }</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160; </div>
+<div class="line"><a name="l00108"></a><span class="lineno"><a class="line" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">  108</a></span>&#160;    <span class="keyword">public</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> <a class="code" href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">DailyConsumption</a>(List&lt;Data&gt; posts){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;        <span class="keywordtype">double</span> maxValue = 0;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; posts.size(); i++){</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            maxValue += posts.get(i).<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a>;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        maxValue /= 1000;</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a> update = <span class="keyword">new</span> <a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">TodayConsumption</a>();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">value</a> = maxValue;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        SimpleDateFormat formatter = <span class="keyword">new</span> SimpleDateFormat(<span class="stringliteral">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        Date date = <span class="keyword">new</span> Date();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        update.<a class="code" href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#afc6bb3d48945636df803bc1b9e9cf962">date</a> = formatter.format(date);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> update;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;    <span class="keyword">private</span> Boolean compareColumn(Double value){</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;        Boolean duplicate = <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        var x = em.createQuery(<span class="stringliteral">&quot;select tc.value from TodayConsumption tc order by tc.id desc&quot;</span>, Double.class).setMaxResults(1).getSingleResult();</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;        <span class="keywordflow">if</span>(Objects.equals(x, value)){</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;            duplicate = <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        }</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160; </div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;        <span class="keywordflow">return</span> duplicate;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <span class="comment">/*public void MonthlyConsumption(){</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">        MonthlyConsumption update = new MonthlyConsumption();</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">        var x = em.createQuery(&quot;SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)&quot;, Object.class).getResultList();</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">        int lastIndex = x.size();</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">        update.date = x.get(1);</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">        update.value = x.get(lastIndex).value;</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">        crud.add(update);</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="comment">    }*/</span></div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;}</div>
+<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">at.htl.restclient.controller.DataController</a></div><div class="ttdoc">Process the data and store the processed data in the database.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00031">DataController.java:31</a></div></div>
+<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_a964b66b831d6682de571b1319a731134"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">at.htl.restclient.controller.DataController.DailyConsumption</a></div><div class="ttdeci">TodayConsumption DailyConsumption(List&lt; Data &gt; posts)</div><div class="ttdoc">Process the Date and generate new Row with data and value.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00108">DataController.java:108</a></div></div>
+<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_aa95d28849fa102a7c4fec5f218c832ca"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">at.htl.restclient.controller.DataController.data</a></div><div class="ttdeci">Response data()</div><div class="ttdoc">Call up Service and get Json File and process new data.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00057">DataController.java:57</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1entities_1_1Head_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1entities_1_1Head.html">at.htl.restclient.entities.Head</a></div><div class="ttdoc">Head Entity for Json File - Head for timeStamp and identify the json file.</div><div class="ttdef"><b>Definition:</b> <a href="Head_8java_source.html#l00017">Head.java:17</a></div></div>
-<div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1entities_1_1MonthlyConsumption_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1entities_1_1MonthlyConsumption.html">at.htl.restclient.entities.MonthlyConsumption</a></div><div class="ttdoc">Calculated Value of Data Entity - Monthly.</div><div class="ttdef"><b>Definition:</b> <a href="MonthlyConsumption_8java_source.html#l00013">MonthlyConsumption.java:13</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html">at.htl.restclient.entities.TodayConsumption</a></div><div class="ttdoc">Calculated Value of Data Entity - Daily.</div><div class="ttdef"><b>Definition:</b> <a href="TodayConsumption_8java_source.html#l00013">TodayConsumption.java:13</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption_html_a25e8abf4d202f45af3af6f0bf279ec93"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#a25e8abf4d202f45af3af6f0bf279ec93">at.htl.restclient.entities.TodayConsumption.value</a></div><div class="ttdeci">Double value</div><div class="ttdoc">Calculated Value of Data Entity.</div><div class="ttdef"><b>Definition:</b> <a href="TodayConsumption_8java_source.html#l00026">TodayConsumption.java:26</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption_html_afc6bb3d48945636df803bc1b9e9cf962"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1entities_1_1TodayConsumption.html#afc6bb3d48945636df803bc1b9e9cf962">at.htl.restclient.entities.TodayConsumption.date</a></div><div class="ttdeci">String date</div><div class="ttdoc">TimeStamp when the data is created.</div><div class="ttdef"><b>Definition:</b> <a href="TodayConsumption_8java_source.html#l00032">TodayConsumption.java:32</a></div></div>
