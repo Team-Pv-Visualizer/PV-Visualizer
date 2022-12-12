@@ -5,7 +5,7 @@ on:
       - main
     
     paths: 
-      - Website/jasminsweets_ws/**
+      - BackendxFrontend/pvv_website/**
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
         ssh-private-key:  ${{ secrets.SSH_PRIVATE_KEY }}
         user: ${{ secrets.SERVER_USER }}
         server: ${{ secrets.SERVER }}
-        alias: server
+        alias: leopvvusalizer
     
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
@@ -37,13 +37,12 @@ jobs:
         pwd
         ls -l
         hugo
-      working-directory: Website/jasminsweets_ws 
+      working-directory: BackendxFrontend/pvv_website 
     
     - name: test ssh
       run: |
         ssh server ls -l
-
     - name: deploy to server
       run: |
         scp -r * server:/var/www/html 
-      working-directory: Website/jasminsweets_ws/public  
+      working-directory: BackendxFrontend/pvv_website/public  
