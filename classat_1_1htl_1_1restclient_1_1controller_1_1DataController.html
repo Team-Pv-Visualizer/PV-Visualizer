@@ -146,14 +146,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;            maxValue += posts.get(i).value;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;        }</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        maxValue /= 1000;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;        TodayConsumption update = <span class="keyword">new</span> TodayConsumption();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        update.value = maxValue;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        SimpleDateFormat formatter = <span class="keyword">new</span> SimpleDateFormat(<span class="stringliteral">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;        Date date = <span class="keyword">new</span> Date();</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        update.date = formatter.format(date);</div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
-<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> update;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;            TodayConsumption update = <span class="keyword">new</span> TodayConsumption();</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;            update.value = maxValue;</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;            SimpleDateFormat formatter = <span class="keyword">new</span> SimpleDateFormat(<span class="stringliteral">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            Date date = <span class="keyword">new</span> Date();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;            update.date = formatter.format(date);</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;            <span class="keywordflow">return</span> update;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        }</div>
 </div><!-- fragment -->
 </div>
 </div>
