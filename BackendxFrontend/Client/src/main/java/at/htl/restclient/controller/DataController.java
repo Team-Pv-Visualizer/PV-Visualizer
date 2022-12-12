@@ -1,6 +1,7 @@
 package at.htl.restclient.controller;
 
-import java.time.LocalDate;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -105,59 +106,17 @@ public class DataController {
      * @return new row
      */
     public TodayConsumption DailyConsumption(List<Data> posts){
-        /*double value = 0;
-
-        if(counter == 0){
-            for(int i = 0; i < posts.size(); i++){
-                value += posts.get(i).value;
-            }
-        }
-        else{
-            var oldDate = em.createQuery("select tc.timeStamp from Head tc order by tc.id desc", String.class).setMaxResults(1).getSingleResult();
-            var newDate = getDate();
-            if(newDate == oldDate){
-                var x = em.createQuery("select tc.id, tc.date, tc.value from TodayConsumption tc order by tc.id desc", TodayConsumption.class).setMaxResults(1).getSingleResult();
-                LocalDate localDate = LocalDate.now();
-                if(localDate.toString() == x.date){
-                    for(int i = 0; i < posts.size(); i++){
-                        value += posts.get(i).value;
-                    }
-                    value += x.value;
-                    crud.delete(x);
-                }
-                else{
-                    for(int i = 0; i < posts.size(); i++){
-                        value += posts.get(i).value;
-                    }
-                }
-            }
-        }
-
-        TodayConsumption update = new TodayConsumption();
-        update.value = value;
-        LocalDate localDate = LocalDate.now();
-        update.date = localDate.toString();*/
-
-        double firstValue = 0;
         double maxValue = 0;
-        double nextValue = 0;
 
         for (int i = 0; i < posts.size(); i++){
-            if(firstValue == 0){
-                firstValue = posts.get(i).value;
-                maxValue = firstValue;
-            }
-            else{
-                nextValue = posts.get(i).value;
-                if(nextValue > maxValue)
-                    maxValue = nextValue;
-            }
+            maxValue += posts.get(i).value;
         }
-
+        maxValue /= 1000;
         TodayConsumption update = new TodayConsumption();
         update.value = maxValue;
-        LocalDate localDate = LocalDate.now();
-        update.date = localDate.toString();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        update.date = formatter.format(date);
 
         return update;
     }
@@ -180,12 +139,12 @@ public class DataController {
     /**
      * Calculated MonthlyConsumption with TodayConsumption
      */
-    public void MonthlyConsumption(){
+    /*public void MonthlyConsumption(){
         MonthlyConsumption update = new MonthlyConsumption();
         var x = em.createQuery("SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)", Object.class).getResultList();
-        /*int lastIndex = x.size();
+        int lastIndex = x.size();
         update.date = x.get(1);
         update.value = x.get(lastIndex).value;
-        crud.add(update);*/
-    }
+        crud.add(update);
+    }*/
 }
