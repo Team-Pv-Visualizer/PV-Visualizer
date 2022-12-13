@@ -131,7 +131,6 @@ public class DataController {
         if(Objects.equals(x, value)){
             duplicate = true;
         }
-
         return duplicate;
     }
 
