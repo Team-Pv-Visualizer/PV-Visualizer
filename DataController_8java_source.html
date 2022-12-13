@@ -177,19 +177,18 @@ $(function() {
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keywordflow">if</span>(Objects.equals(x, value)){</div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            duplicate = <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;        }</div>
-<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160; </div>
-<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;        <span class="keywordflow">return</span> duplicate;</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    }</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;    <span class="comment">/*public void MonthlyConsumption(){</span></div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">        /*MonthlyConsumption update = new MonthlyConsumption();</span></div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">        var x = em.createQuery(&quot;SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)&quot;, Object.class).getResultList();</span></div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">        int lastIndex = x.size();</span></div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">        update.date = x.get(1);</span></div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">        update.value = x.get(lastIndex).value;</span></div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">        crud.add(update);</span></div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;<span class="comment">    }*/</span></div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;}</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> duplicate;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;    }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160; </div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;    <span class="comment">/*public void MonthlyConsumption(){</span></div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;<span class="comment">        /*MonthlyConsumption update = new MonthlyConsumption();</span></div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;<span class="comment">        var x = em.createQuery(&quot;SELECT MONTH(tc.date), SUM(tc.value) FROM TodayConsumption tc GROUP BY MONTH(tc.date)&quot;, Object.class).getResultList();</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;<span class="comment">        int lastIndex = x.size();</span></div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;<span class="comment">        update.date = x.get(1);</span></div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;<span class="comment">        update.value = x.get(lastIndex).value;</span></div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;<span class="comment">        crud.add(update);</span></div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;<span class="comment">    }*/</span></div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;}</div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html">at.htl.restclient.controller.DataController</a></div><div class="ttdoc">Process the data and store the processed data in the database.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00031">DataController.java:31</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_a964b66b831d6682de571b1319a731134"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#a964b66b831d6682de571b1319a731134">at.htl.restclient.controller.DataController.DailyConsumption</a></div><div class="ttdeci">TodayConsumption DailyConsumption(List&lt; Data &gt; posts)</div><div class="ttdoc">Process the Date and generate new Row with data and value.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00108">DataController.java:108</a></div></div>
 <div class="ttc" id="aclassat_1_1htl_1_1restclient_1_1controller_1_1DataController_html_aa95d28849fa102a7c4fec5f218c832ca"><div class="ttname"><a href="classat_1_1htl_1_1restclient_1_1controller_1_1DataController.html#aa95d28849fa102a7c4fec5f218c832ca">at.htl.restclient.controller.DataController.data</a></div><div class="ttdeci">Response data()</div><div class="ttdoc">Call up Service and get Json File and process new data.</div><div class="ttdef"><b>Definition:</b> <a href="DataController_8java_source.html#l00057">DataController.java:57</a></div></div>
