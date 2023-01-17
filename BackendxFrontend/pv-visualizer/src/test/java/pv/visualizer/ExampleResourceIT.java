@@ -1,4 +1,4 @@
-package pv.visualiser;
+package pv.visualizer;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 
