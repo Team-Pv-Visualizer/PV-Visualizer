@@ -1,7 +1,7 @@
-package at.htl.restclient.service;
+package pv.visualizer.service;
 
-import at.htl.restclient.entities.Head;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
+import pv.visualizer.entities.FroniusObject;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
@@ -13,13 +13,13 @@ import javax.ws.rs.core.MediaType;
  */
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient(baseUri = "http://localhost:3000/Head")
-public interface HeadService {
+@RegisterRestClient(baseUri = "http://127.0.0.1:3000/FroniusObject")
+public interface FroniusService {
 
     /**
      * Get all data - get json file
      * @return json file
      */
     @GET
-    Head getAll();
+    FroniusObject getAll();
 }

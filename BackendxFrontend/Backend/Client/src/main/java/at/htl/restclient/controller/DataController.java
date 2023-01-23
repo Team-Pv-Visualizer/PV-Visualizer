@@ -45,9 +45,9 @@ public class DataController {
      * Call up the method data every 120sec
      */
     @Scheduled(every="120s")
-    public void callUpMethod(){
-        data();
-    }
+        public void callUpMethod(){
+            data();
+        }
 
     /**
      * Call up Service and get Json File and process new data

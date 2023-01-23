@@ -1,19 +1,16 @@
 package pv.visualizer.controller;
+import io.quarkus.scheduler.Scheduled;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.json.*;
+import pv.visualizer.entities.FroniusObject;
+import pv.visualizer.genericoperations.CRUDOperations;
+import pv.visualizer.service.FroniusService;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 
 @Path("/Fronius")
 @Produces(MediaType.APPLICATION_JSON)
@@ -37,14 +34,16 @@ public class FroniusController {
      */
     private String password;
 
-    /**
-     * Client Builder for Login
-     */
-    private final Client client = ClientBuilder.newClient();
+    @Inject
+    @RestClient
+    FroniusService froniusService;
+
+    @Inject
+    CRUDOperations crud;
 
     public void loadSettings() {
         try {
-            JSONObject json = new JSONObject(new JSONTokener(new FileReader("C:\\Users\\1209a\\OneDrive\\Desktop\\School\\Syp\\PV-Visualizer\\BackendxFrontend\\pv-visualizer\\src\\main\\resources\\Settings.json")));
+            JSONObject json = new JSONObject(new JSONTokener(new FileReader("C:\\Users\\1209a\\OneDrive\\Desktop\\School\\Syp\\PV-Visualizer\\BackendxFrontend\\Backend\\pv-visualizer\\src\\main\\resources\\Settings.json")));
             service = json.getString("Service");
             username = json.getString("Username");
             password = json.getString("Password");
@@ -52,35 +51,27 @@ public class FroniusController {
             e.printStackTrace();
         }
     }
-    public static void login(String url, String username, String password) {
-        try {
-            URL obj = new URL(url);
-            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-            con.setRequestMethod("POST");
-            con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            String urlParameters = "username=" + username + "&password=" + password;
-            con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
-            wr.close();
-            int responseCode = con.getResponseCode();
-            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            System.out.println(response.toString());
-        } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-    }
+
+    @Scheduled(every="10s")
     @GET
-    public Response test() throws IOException {
+    public Response data() {
         loadSettings();
-        login("https://www.solarweb.com/Account/ExternalLogin",username,password);
-        return Response.ok().build();
+        System.out.println("Call up FroniusObject");
+        System.out.println(service);
+        if(service.contains("Fronius") == true){
+            FroniusObject froniusObject = new FroniusObject();
+            try {
+                froniusObject = froniusService.getAll();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+
+            crud.add(froniusObject);
+
+            return Response.ok(froniusObject).build();
+        }
+        else{
+            return Response.ok().build();
+        }
     }
 }
