@@ -5,7 +5,6 @@
     },
     "DATA":[
         {
-            "id": 1,
             "value": 7386.23,
             "unit": "W",
             "headId": 1
@@ -13,7 +12,6 @@
     ],
     "Status":[
         {
-            "id": 1,
             "code": "200",
             "reason": "",
             "userMessage": "",
