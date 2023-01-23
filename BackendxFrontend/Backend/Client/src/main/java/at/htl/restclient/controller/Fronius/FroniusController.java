@@ -1,6 +1,7 @@
 package at.htl.restclient.controller.Fronius;
 
 
+import at.htl.restclient.Common.JsonReader;
 import at.htl.restclient.entities.Fronius.FroniusObject;
 import at.htl.restclient.genericoperations.CRUDOperations;
 import at.htl.restclient.service.Fronius.FroniusService;
@@ -47,20 +48,10 @@ public class FroniusController {
     @Inject
     CRUDOperations crud;
 
-    public void loadSettings() {
-        try {
-            JSONObject json = new JSONObject(new JSONTokener(new FileReader("C:\\Users\\1209a\\OneDrive\\Desktop\\School\\Syp\\PV-Visualizer\\BackendxFrontend\\Backend\\pv-visualizer\\src\\main\\resources\\Settings.json")));
-            service = json.getString("Service");
-            username = json.getString("Username");
-            password = json.getString("Password");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Scheduled(every = "10s")
     public void callUpMethode(){
-        loadSettings();
+        service = JsonReader.loadSettings();
+        System.out.println(service);
         if(service.contains("Fronius") == true){
             data();
             System.out.println("Call up Fronius API");
@@ -69,7 +60,6 @@ public class FroniusController {
 
     @GET
     public Response data() {
-        loadSettings();
         FroniusObject froniusObject = new FroniusObject();
         try {
             froniusObject = froniusService.getAll();
