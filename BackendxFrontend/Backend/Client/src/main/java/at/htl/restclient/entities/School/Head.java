@@ -1,4 +1,4 @@
-package at.htl.restclient.entities;
+package at.htl.restclient.entities.School;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -36,9 +36,9 @@ public class Head {
     Set<Data> data = new HashSet<>();
 
     /**
-     * Status of Head - Inheritance
+     * Status List of Head - Inheritance
      */
-    @OneToOne(mappedBy = "head", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "head", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
-    public Status status;
+    Set<Status> status = new HashSet<>();
 }

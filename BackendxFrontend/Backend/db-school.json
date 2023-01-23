@@ -1,0 +1,23 @@
+{
+    "Head":{
+        "id": 1,
+        "timeStamp": "26-01-2023 08:00:00"
+    },
+    "DATA":[
+        {
+            "id": 1,
+            "value": 7386.23,
+            "unit": "W",
+            "headId": 1
+        }
+    ],
+    "Status":[
+        {
+            "id": 1,
+            "code": "200",
+            "reason": "",
+            "userMessage": "",
+            "headId": 1
+        }
+    ]
+}

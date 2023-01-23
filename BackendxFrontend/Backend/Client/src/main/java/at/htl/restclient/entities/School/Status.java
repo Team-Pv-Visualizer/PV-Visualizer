@@ -1,4 +1,4 @@
-package at.htl.restclient.entities;
+package at.htl.restclient.entities.School;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -47,7 +47,7 @@ public class Status {
     /**
      * Status of Head - Inheritance
      */
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "headId")
     @JsonBackReference
     public Head head;

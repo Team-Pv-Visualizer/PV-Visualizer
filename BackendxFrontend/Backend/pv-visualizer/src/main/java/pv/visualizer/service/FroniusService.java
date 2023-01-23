@@ -13,7 +13,7 @@ import javax.ws.rs.core.MediaType;
  */
 @ApplicationScoped
 @Produces(MediaType.APPLICATION_JSON)
-@RegisterRestClient(baseUri = "http://127.0.0.1:3000/FroniusObject")
+@RegisterRestClient(baseUri = "http://localhost:3004/FroniusObject")
 public interface FroniusService {
 
     /**

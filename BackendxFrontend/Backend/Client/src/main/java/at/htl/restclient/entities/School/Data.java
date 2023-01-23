@@ -1,4 +1,4 @@
-package at.htl.restclient.entities;
+package at.htl.restclient.entities.School;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -19,12 +19,6 @@ public class Data {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
-    /**
-     * Title for each Data Entity - Title of Device
-     */
-    @Column
-    public String title;
 
     /**
      * Value for each Data Entity - Value of Consumption
