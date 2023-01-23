@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"at.htl.restclient"},{"l":"at.htl.restclient.controller"},{"l":"at.htl.restclient.entities"},{"l":"at.htl.restclient.genericoperations"},{"l":"at.htl.restclient.service"}];updateSearchResults();
