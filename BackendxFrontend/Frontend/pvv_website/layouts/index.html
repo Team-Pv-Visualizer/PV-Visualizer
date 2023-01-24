@@ -33,40 +33,8 @@ body {font-family: Verdana, sans-serif; margin:0}
   justify-content: center; 
   position: absolute; 
   right: 0; Left: 0; top: 0; bottom: 0; 
-  padding-top: 450px;
+  padding-top: 330px;
   margin: auto;
-}
-
-#daily-consumption{
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  position: absolute; 
-  right: 0; Left: 0; top: 0; bottom: 0; 
-  margin: auto;
-  padding-bottom: 630px;
-  padding-right: 600px;
-}
-
-#monthly-consumption{
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  position: absolute; 
-  right: 0; Left: 0; top: 0; bottom: 0; 
-  margin: auto;
-  padding-bottom: 630px;
-  padding-left: 600px;
-}
-
-#current-values{
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  position: absolute; 
-  right: 0; Left: 0; top: 0; bottom: 0; 
-  margin: auto;
-  padding-top: 90px;
 }
 </style>
 
@@ -78,8 +46,6 @@ body {font-family: Verdana, sans-serif; margin:0}
 
   <div id="pv-graph1">
     <div id="diagram-labels1">
-      <h3 id="daily-consumption"> Täglicher Verbrauch</h3>
-      <h3 id="monthly-consumption"> Monatlicher Verbrauch</h3>
     </div>
     <iframe src="http://localhost:3000/d-solo/CC5XroOVz/pvv?orgId=1&from=1670886000000&to=1670972399000&theme=light&panelId=2" width="650" height="300" frameborder="0"></iframe>
     <iframe src="http://localhost:3000/d-solo/CC5XroOVz/pvv?orgId=1&from=1670886000000&to=1670972399000&theme=light&panelId=6" width="650" height="300" frameborder="0"></iframe>
@@ -87,7 +53,6 @@ body {font-family: Verdana, sans-serif; margin:0}
 
   <div id="pv-graph2">
     <div id="diagram-labels2">
-      <h3 id="current-values"> Aktuelle Werte - Statistik</h3>
     </div>
     <iframe src="http://localhost:3000/d-solo/CC5XroOVz/pvv?orgId=1&from=1670886000000&to=1670972399000&theme=light&panelId=8" width="650" height="300" frameborder="0"></iframe>
   </div>
