@@ -18,7 +18,7 @@ body {font-family: Verdana, sans-serif; margin:0}
     margin-top: 2px;
 }
 
-#pv-graph1{
+#row1{
   display: flex; 
   align-items: center; 
   justify-content: center; 
@@ -28,14 +28,18 @@ body {font-family: Verdana, sans-serif; margin:0}
   margin: auto;
 }
 
-#pv-graph2{
+#pv-graph3{
   display: flex; 
   align-items: center; 
   justify-content: center; 
   position: absolute; 
   right: 0; Left: 0; top: 0; bottom: 0; 
-  padding-top: 330px;
+  padding-top: 340px;
   margin: auto;
+}
+
+#pv-graph2{
+  padding-left: 6px;
 }
 </style>
 
@@ -45,14 +49,17 @@ body {font-family: Verdana, sans-serif; margin:0}
 </header>
 <body>
 
-  <div id="pv-graph1">
-    <div id="diagram-labels1">
+  <div id="row1">
+    <div id="pv-graph1">
+      <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674718929964&to=1674739226872&theme=light&panelId=6" width="650" height="300" frameborder= "0"></iframe>
     </div>
-    <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674718929964&to=1674739226872&theme=light&panelId=6" width="650" height="300" frameborder= "0"></iframe>
-        <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674691200000&to=1674777599000&theme=light&panelId=8" width="650" height="300" frameborder="0"></iframe>
-  </div> 
 
-  <div id="pv-graph2">
+    <div id="pv-graph2">
+      <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674691200000&to=1674777599000&theme=light&panelId=8" width="650" height="300" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <div id="pv-graph3">
     <div id="diagram-labels2">
     </div>
     <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674691200000&to=1674777599000&theme=light&panelId=2" width="650" height="300" frameborder="0"></iframe>
