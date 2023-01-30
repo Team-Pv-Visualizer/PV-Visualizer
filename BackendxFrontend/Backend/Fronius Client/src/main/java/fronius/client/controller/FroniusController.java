@@ -43,7 +43,7 @@ public class FroniusController {
     @Inject
     CRUDOperations crud;
 
-    @Scheduled(every = "10s")
+    @Scheduled(every = "30s")
     public void callUpMethode(){
         String[] newSettings;
         newSettings = JsonReader.loadSettings();

@@ -1,61 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>HTL Leonding</title>
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTL Leonding</title>
+  </head>
+  <style>
+    body {
+      font-family: Verdana, sans-serif;
+      margin: 0
+    }
 
-<style>
-body {font-family: Verdana, sans-serif; margin:0}
+    .custom-logo {
+      height: 40px;
+      width: auto;
+      transform: scale(1.3);
+      transform-origin: left;
+      margin-top: 3px;
+    }
+  </style>
+  <header>
+    <img class="custom-logo" src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="HTL Leonding Logo" width="2911" height="723" style="padding-left: 50px; padding-top: 5px;" />
+    <hr>
+  </header>
+  <body>
+    <fronius-dashboard id="pv-graph1">
+    </fronius-dashboard>
+    <fronius-dashboard id="pv-graph2">
+    </fronius-dashboard>
 
-.custom-logo{
-    height: 40px;
-    width: auto;
-    transform: scale(1.3);
-    transform-origin: left;
-    margin-top: 3px;
-}
+    <script>
+      customElements.define("fronius-dashboard", class extends HTMLElement {
+        connectedCallback() {
+          const shadowRoot = this.attachShadow({mode: "open"});
+          shadowRoot.innerHTML = `
+            <style>
+              :host {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: absolute;
+                right: 0;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+              }
+            </style>
+            <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=5s&from=1675110649699&to=1675119258582&theme=light&panelId=2" width="650" height="300"></object>
+          `;
 
-#pv-graph1{
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  position: absolute; 
-  right: 0; Left: 0; top: 0; bottom: 0; 
-  padding-bottom: 250.5px;
-  margin: auto;
-}
-
-#pv-graph2{
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  position: absolute; 
-  right: 0; Left: 0; top: 0; bottom: 0; 
-  padding-top: 350px;
-  margin: auto;
-}
-
-</style>
-
-<header>
-  <img class="custom-logo" src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="HTL Leonding Logo" width="2911" height="723" style="padding-left: 50px; padding-top: 5px;"/>
-  <hr>
-</header>
-<body>
-
-  <div id="pv-graph1">
-  <iframe src="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&from=1674719807845&to=1674723766688&theme=light&panelId=2" width="650" height="300" frameborder="0"></iframe>
-  <iframe src="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?from=1674719807845&to=1674723766688&orgId=1&theme=light&panelId=4" width="650" height="300" frameborder="0"></iframe>
-</div> 
-
-<div id="pv-graph2">
-  <iframe src="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&from=1674719147714&to=1674724842825&theme=light&panelId=10" width="650" height="300" frameborder="0"></iframe>
-  <iframe src="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?from=1674719807845&to=1674723766688&orgId=1&theme=light&panelId=8" width="650" height="300" frameborder="0"></iframe>
-</div>
+          if (this.id === "pv-graph2") {
+            shadowRoot.innerHTML += `
+              <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=5s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="650" height="300"></object>
+            `;
+          }
+        }
+      });
+    </script>
   </body>
-</html> 
-
-
+</html>
