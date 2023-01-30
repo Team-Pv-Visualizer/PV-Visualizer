@@ -1,4 +1,4 @@
-package at.htl.restclient.entities.Fronius;
+package fronius.client.entities;
 
 import lombok.*;
 import javax.persistence.*;
@@ -31,3 +31,4 @@ public class FroniusObject {
     @Column
     public Double p_Load;
 }
+
