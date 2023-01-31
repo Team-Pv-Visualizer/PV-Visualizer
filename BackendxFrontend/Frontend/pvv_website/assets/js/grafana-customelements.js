@@ -31,5 +31,4 @@ shadowRoot.innerHTML = `
   </div>
 `;
 }
-
   });
