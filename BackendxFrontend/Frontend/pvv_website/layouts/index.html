@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="../assets/js/grafana-customelements.js"></script>
   <title>HTL Leonding</title>
 </head>
 
@@ -41,51 +42,20 @@ body {font-family: Verdana, sans-serif; margin:0}
 #pv-graph2{
   padding-left: 6px;
 }
+
 </style>
 
-<script>
-  /*
-  // Define a custom element
-class GrafanaEmbed extends HTMLElement {
-  // The constructor is called every time the element is inserted into the DOM
-  constructor() {
-    // Always call super first in constructor
-    super();
+<school-dashboard id="pv-graph1">
+</school-dashboard>
+<school-dashboard id="pv-graph2">
+</school-dashboard>
 
-    // Create a shadow root
-    this.attachShadow({mode: 'open'});
-  }
-
-  // Called every time the element is inserted into the DOM
-  connectedCallback() {
-    // Create a div to hold the Grafana panel
-    const panelContainer = document.createElement('div');
-    panelContainer.setAttribute('id', 'grafana-panel');
-
-    // Attach the div to the shadow root
-    this.shadowRoot.appendChild(panelContainer);
-
-    // Add the Grafana panel to the div using the Grafana API
-    // Replace YOUR_API_KEY with your actual Grafana API key
-    // Replace YOUR_PANEL_ID with the actual ID of the panel you want to embed
-    const grafana = new Grafana.Panel({
-      apiKey: 'YOUR_API_KEY',
-      panelId: 'YOUR_PANEL_ID',
-      container: 'grafana-panel'
-    });
-  }
-}
-
-// Register the custom element
-customElements.define('grafana-embed', GrafanaEmbed); */
-</script>
-
-<header>
-  <img class="custom-logo" src="https://www.htl-leonding.at/wp-content/uploads/2022/10/htllogo_2022_black_v2.png" alt="HTL Leonding Logo" width="2911" height="723" style="padding-left: 50px; padding-top: 5px;"/>
-  <hr>
-</header>
 <body>
-
+  <header>
+    <img class="custom-logo" src="https://www.htl-leonding.at/wp-content/uploads/2022/10/htllogo_2022_black_v2.png" alt="HTL Leonding Logo" width="2911" height="723" style="padding-left: 50px; padding-top: 5px;"/>
+    <hr>
+  </header>
+<!-- 
   <div id="row1">
     <div id="pv-graph1">
       <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674718929964&to=1674739226872&theme=light&panelId=6" width="650" height="300" frameborder= "0"></iframe>
@@ -101,6 +71,6 @@ customElements.define('grafana-embed', GrafanaEmbed); */
     </div>
     <iframe src="http://localhost:3000/d-solo/9EkocBTVk/school-dashboard?orgId=1&from=1674691200000&to=1674777599000&theme=light&panelId=2" width="650" height="300" frameborder="0"></iframe>
   </div>
-
+-->
   </body>
 </html> 
