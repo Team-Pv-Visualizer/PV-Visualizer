@@ -58,7 +58,7 @@ public class FroniusController {
 
     public void getCookie(){
         try{
-            URL url = new URL("https://www.solarweb.com/Home/GuestLogOn?pvSystemId=2ffd8c5d-221e-4887-8a6a-f7efbc2016c9");
+            URL url = new URL("https://www.solarweb.com/Home/GuestLogOn?pvSystemId=" + PvSystemId);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
 
             con.setRequestMethod("GET");
@@ -84,8 +84,6 @@ public class FroniusController {
 
     @GET
     public Response data() {
-        //getCookie();
-
         try{
             String urlString = "https://www.solarweb.com/ActualData/GetCompareDataForPvSystem?pvSystemId=" + PvSystemId;
             URL url = new URL(urlString);
