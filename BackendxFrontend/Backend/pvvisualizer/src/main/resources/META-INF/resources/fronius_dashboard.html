@@ -30,7 +30,7 @@
 
    h1 {
     font-size: 30px;
-    margin: 30;
+    margin: 30px;
     padding-bottom: 35px;
     text-align: center;
    }
@@ -107,16 +107,30 @@
     document.getElementById("popup").style.display = "flex";
    }
 
+   function saveSettings() {
+     var pvsystemid = document.getElementById("pvsystemid").value;
+
+     // Send a POST request to the server
+     var xhr = new XMLHttpRequest();
+     xhr.open("POST", "saveSettings.php", true);
+     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+     xhr.onreadystatechange = function() {
+       if (xhr.readyState === 4 && xhr.status === 200) {
+         // The request was successful, close the popup
+         hidePopup();
+       }
+     };
+
+     // Check if the pvsystemid already exists
+     xhr.send("pvsystemid=" + encodeURIComponent(pvsystemid));
+   }
+
    function hidePopup() {
     document.getElementById("popup").style.display = "none";
    }
 
-   function saveSettings() {
-    // Hier den Code einfügen, um die Einstellungen in der Datenbank zu speichern
-    // Dann das Pop-up-Fenster schließen
-    hidePopup();
-   }
-  </script>
+</script>
+
 <h1>PV - Übersicht:</h1>
 <fronius-dashboard id="pv-graph1"></fronius-dashboard>
 <fronius-dashboard id="pv-graph2"></fronius-dashboard>

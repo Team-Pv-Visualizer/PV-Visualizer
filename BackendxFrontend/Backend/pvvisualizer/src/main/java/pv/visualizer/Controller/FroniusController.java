@@ -43,17 +43,13 @@ public class FroniusController {
 
     @Scheduled(every = "30s")
     public void callUpMethode(){
-        String[] newSettings;
-        newSettings = JsonReader.loadSettings();
-        if(newSettings[0].contains("Fronius") == true){
-            PvSystemId = newSettings[1];
-            try {
-                getData();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
+        PvSystemId = "6bfeec1c-3465-4ffd-a80e-9f82cccf1aa8";
+        try {
+            getData();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 
