@@ -40,7 +40,23 @@
 			width: 150px;
 			margin-right: 10px;
 		}
-	</style>
+
+        .home-button {
+            position: absolute;
+            top: 45px;
+            left: 20px;
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            background-image: url("https://cdn-icons-png.flaticon.com/512/1946/1946488.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+
+  </style>
 </head>
 <body>
 <div class="header">
@@ -54,7 +70,7 @@
 <h1>PV - Übersicht:</h1>
 <fronius-dashboard id="pv-graph1"></fronius-dashboard>
 <fronius-dashboard id="pv-graph2"></fronius-dashboard>
-
+<a href="index.html" class="home-button"></a>
 <script>
           customElements.define("fronius-dashboard", class extends HTMLElement {
             connectedCallback() {
