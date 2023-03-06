@@ -3,3 +3,4 @@
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-1');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-2');
 -- insert into myentity (id, field) values(nextval('hibernate_sequence'), 'field-3');
+insert into User (id, pvSystemId) values(nextval('hibernate_sequence'), '6bfeec1c-3465-4ffd-a80e-9f82cccf1aa8');
