@@ -7,6 +7,7 @@ import pv.visualizer.Entities.FroniusObject;
 import pv.visualizer.GenericOperations.CRUDOperations;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -41,9 +42,15 @@ public class FroniusController {
     @Inject
     CRUDOperations crud;
 
+    @Inject
+    EntityManager em;
+
     @Scheduled(every = "30s")
     public void callUpMethode(){
-        PvSystemId = "6bfeec1c-3465-4ffd-a80e-9f82cccf1aa8";
+        var result = em.createQuery("SELECT u.pvSystemId FROM User u ORDER BY u.id DESC").setMaxResults(1);
+        PvSystemId = (String) result.getSingleResult();
+        System.out.println(PvSystemId);
+
         try {
             getData();
         } catch (IOException e) {
