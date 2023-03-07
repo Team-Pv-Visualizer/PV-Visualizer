@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>PV-Visualizer</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <style>
+   body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+   }
+
+   .header {
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .header h1 {
+    font-size: 30px;
+    margin: 0;
+    padding: 5px;
+    border-bottom: 2px solid #000;
+   }
+
+   h1 {
+    font-size: 30px;
+    margin: 30px;
+    padding-bottom: 35px;
+    text-align: center;
+   }
+
+   .solar-panel-icon {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+   }
+
+   .solar-panel-icon img {
+    width: 150px;
+    margin-right: 10px;
+   }
+
+   .popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+   }
+
+   .popup-inner {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000;
+    width: 300px;
+    text-align: center;
+   }
+
+   .settings-icon {
+    margin: 10px;
+    float: right;
+   }
+
+   .home-button {
+     position: absolute;
+     top: 45px;
+     left: 20px;
+     display: inline-block;
+     width: 45px;
+     height: 45px;
+     background-image: url("https://cdn-icons-png.flaticon.com/512/1946/1946488.png");
+     background-repeat: no-repeat;
+     background-size: contain;
+     background-color: transparent;
+     border: none;
+     outline: none;
+   }
+
+  </style>
+</head>
+<body>
+<div class="header">
+  <h1>
+    <span class="solar-panel-icon">
+     <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Dashboard </span>
+  </h1>
+  <a href="index.html" class="home-button"></a>
+</div>
+<div class="fa fa-cog settings-icon">
+  <!-- Ersetze das Bild durch dein Icon -->
+  <img src="settingsicon.png" alt="Settings Icon" width="50" height="50" onclick="showPopup()">
+</div>
+<!-- Das Pop-up-Fenster -->
+<div class="popup" id="popup">
+  <div class="popup-inner">
+    <h2>Einstellungen</h2>
+    <table>
+      <tr>
+        <td>PvSystemId:</td>
+        <td>
+          <input type="text" id="pvsystemid" placeholder="Letzter Eintrag">
+        </td>
+      </tr>
+    </table>
+    <br>
+    <button onclick="saveSettings()">Speichern</button>
+    <button onclick="hidePopup()">Abbrechen</button>
+  </div>
+</div>
+<script>
+   function showPopup() {
+    document.getElementById("popup").style.display = "flex";
+   }
+
+function saveSettings() {
+var pvsystemid = document.getElementById("pvsystemid").value;
+
+// Send a POST request to the server
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "./saveSettings.php", true);
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhr.onreadystatechange = function() {
+if (xhr.readyState === 4 && xhr.status === 200) {
+// The request was successful, close the popup
+hidePopup();
+}
+};
+
+// Send the request with the pvsystemid data
+xhr.send("pvsystemid=" + pvsystemid);
+}
+
+   function hidePopup() {
+    document.getElementById("popup").style.display = "none";
+   }
+
+</script>
+
+<h1>PV - Übersicht:</h1>
+<fronius-dashboard id="pv-graph1"></fronius-dashboard>
+<fronius-dashboard id="pv-graph2"></fronius-dashboard>
+<script>
+   // globale Variable zum Speichern, ob Diagramme bereits erstellt wurden
+   let chartsCreated = false;
+   customElements.define("fronius-dashboard", class extends HTMLElement {
+    connectedCallback() {
+     if (chartsCreated) {
+      // Diagramme wurden bereits erstellt, beenden
+      return;
+     }
+     const shadowRoot = this.attachShadow({
+      mode: "open"
+     });
+     shadowRoot.innerHTML = `
+
+								<style>
+            :host {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              right: 0;
+              left: 0;
+              top: 0;
+              bottom: 0;
+              margin: auto;
+            }
+
+            object {
+              margin: 20px;
+            }
+          </style>
+								<div style="display: flex;">
+									<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1678181130578&to=1678212072726&theme=light&panelId=2" width="450" height="250"></object>
+									<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="450" height="250"></object>
+								</div>
+								<div style="display: flex;">
+									<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=8" width="450" height="250"></object>
+									<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=6" width="450" height="250"></object>
+								</div>
+      `;
+     // Diagramme wurden erstellt, setze globale Variable auf true
+     chartsCreated = true;
+    }
+   });
+  </script>
+</body>
+</html>
