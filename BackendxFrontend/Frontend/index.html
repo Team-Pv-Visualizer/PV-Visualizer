@@ -12,7 +12,7 @@
       }
 
       .header {
-        background-color: #fff;
+        background-color: #fcc203;
         box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
         padding: 10px;
         display: flex;
@@ -44,9 +44,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: calc(100vh - 200px);
+        height: calc(100vh - 265px);
         border-radius: 20px;
-        background: linear-gradient(to bottom, #ccc, #fff);
+        background: linear-gradient(to bottom, #fcc203, #fff);
       }
 
       .category {
@@ -68,7 +68,7 @@
       }
 
       .category:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px);
       }
 
       .category h2 {
@@ -124,5 +124,47 @@
         <h2>Fronius DB</h2>
       </a>
     </div>
-  </body>
+    <footer>
+      <script>
+        (function(d, s, id) {
+            if (d.getElementById(id)) {
+                if (window._TOMORROW_) {
+                    window._TOMORROW_.renderWidget();
+                }
+                return;
+            }
+            const fjs = d.getElementsByTagName(s)[0];
+            const js = d.createElement(s);
+            js.id = id;
+            js.src = "https://www.tomorrow.io/v1/widget/sdk/sdk.bundle.min.js";
+  
+            fjs.parentNode.insertBefore(js, fjs);
+        })(document, 'script', 'tomorrow-sdk');
+        </script>
+  
+        <div class="tomorrow"
+           data-location-id="002603"
+           data-language="DE"
+           data-unit-system="METRIC"
+           data-skin="light"
+           data-widget-type="upcoming"
+           style="position:relative;"
+        >
+          <a
+            href="https://www.tomorrow.io/weather-api/"
+            rel="nofollow noopener noreferrer"
+            target="_blank"
+            style="position: absolute; transform: translateX(-50%); left: 50%;"
+          >
+            <img
+              alt="Powered by the Tomorrow.io Weather API"
+              src="https://weather-website-client.tomorrow.io/img/powered-by.svg"
+              width="250"
+              height="18"
+            />
+          </a>
+        </div>
+  </script>
+    </footer>
+</body>
 </html>

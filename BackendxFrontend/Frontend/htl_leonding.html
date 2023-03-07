@@ -60,9 +60,26 @@
         border: none;
         outline: none;
       }
+      
+      .animate-bottom {
+        animation-name: animatebottom;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+      }
+
+      @keyframes animatebottom {
+        from {
+          transform: translateY(100%);
+        }
+
+        to {
+          transform: translateY(0%);
+        }
+      }
+      
     </style>
   </head>
-  <body>
+  <body class="animate-bottom">
     <div class="header">
       <h1>
         <span class="solar-panel-icon">

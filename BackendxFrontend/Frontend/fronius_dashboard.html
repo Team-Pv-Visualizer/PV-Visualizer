@@ -180,9 +180,25 @@
         border: none;
         outline: none;
       }
+
+      .animate-bottom {
+        animation-name: animatebottom;
+        animation-duration: 1s;
+        animation-timing-function: ease-out;
+      }
+
+      @keyframes animatebottom {
+        from {
+          transform: translateY(100%);
+        }
+
+        to {
+          transform: translateY(0%);
+        }
+      }
     </style>
   </head>
-  <body>
+  <body class="animate-bottom">
     <div class="header">
       <h1>
         <span class="solar-panel-icon">
@@ -261,7 +277,7 @@
           });
           shadowRoot.innerHTML = `
 
-								
+							
 							<style>
             :host {
               display: flex;
@@ -280,12 +296,12 @@
             }
           </style>
 							<div style="display: flex;">
-								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1678181130578&to=1678212072726&theme=light&panelId=2" width="450" height="250"></object>
-								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="450" height="250"></object>
+								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1678181130578&to=1678212072726&theme=light&panelId=2" width="450" height="200"></object>
+								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="450" height="200"></object>
 							</div>
 							<div style="display: flex;">
-								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=8" width="450" height="250"></object>
-								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=6" width="450" height="250"></object>
+								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=8" width="450" height="200"></object>
+								<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=6" width="450" height="200"></object>
 							</div>
       `;
           // Diagramme wurden erstellt, setze globale Variable auf true
