@@ -1,5 +1,4 @@
 <?php
-// Replace with your MySQL database credentials
 $servername = "192.168.10.192";
 $username = "root";
 $password = "pvv_perlau";
@@ -13,26 +12,36 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the pvsystemid already exists
 $pvsystemid = $_POST["pvsystemid"];
-$sql = "SELECT * FROM User WHERE pvSystemId = '$pvsystemid'";
+
+// Check if the pvsystemid already exists
+$sql = "SELECT pvSystemId FROM User ORDER BY id DESC LIMIT 1";
 $result = $conn->query($sql);
 
-if ($result->num_rows == 0) {
-    // The pvsystemid does not exist, insert a new record
-    $sql = "INSERT INTO User (id, pvSystemId) VALUES (nextval('hibernate_sequence'),'$pvsystemid')";
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    if ($row["pvSystemId"] == $pvsystemid) {
+        echo "Error: pvsystemid already exists";
+    } else {
+        // Insert new record
+        $sql = "INSERT INTO User (pvSystemId) VALUES ('$pvsystemid')";
+        if ($conn->query($sql) === TRUE) {
+            echo "Record inserted successfully";
+        } else {
+            echo "Error inserting record: " . $conn->error;
+        }
+    }
+} else {
+    // Insert new record if table is empty
+    $sql = "INSERT INTO User (pvSystemId) VALUES ('$pvsystemid')";
     if ($conn->query($sql) === TRUE) {
         echo "Record inserted successfully";
     } else {
         echo "Error inserting record: " . $conn->error;
     }
-} else {
-    echo "Record already exists";
 }
+
 
 // Close the connection
 $conn->close();
 ?>
-
-
-

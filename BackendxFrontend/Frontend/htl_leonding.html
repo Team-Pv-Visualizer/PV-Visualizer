@@ -1,86 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>PV-Visualizer</title>
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-  <style>
-		body {
-			font-family: 'Montserrat', sans-serif;
-			margin: 0;
-			padding: 0;
-		}
-    .header {
-			background-color: #fff;
-			box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
-			padding: 10px;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: center;
-		}
-		.header h1 {
-			font-size: 30px;
-			margin: 0;
-			padding: 5px;
-			border-bottom: 2px solid #000;
-		}
-    h1 {
-			font-size: 30px;
-			margin: 30;
-      padding-bottom: 35px;
-      text-align: center;
-		}
-    .solar-panel-icon {
-			display: flex;
-			align-items: center;
-			margin: 20px;
-		}
-		.solar-panel-icon img {
-			width: 150px;
-			margin-right: 10px;
-		}
+  <head>
+    <meta charset="UTF-8">
+    <title>PV-Visualizer</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Montserrat', sans-serif;
+        margin: 0;
+        padding: 0;
+      }
 
-        .home-button {
-            position: absolute;
-            top: 45px;
-            left: 20px;
-            display: inline-block;
-            width: 30px;
-            height: 20px;
-            background-image: url("https://cdn-icons-png.flaticon.com/512/1946/1946488.png");
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-color: transparent;
-            border: none;
-            outline: none;
-        }
+      .header {
+        background-color: #fff;
+        box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
 
-  </style>
-</head>
-<body>
-<div class="header">
-  <h1>
+      .header h1 {
+        font-size: 30px;
+        margin: 0;
+        padding: 5px;
+        border-bottom: 2px solid #000;
+      }
+
+      h1 {
+        font-size: 30px;
+        margin: 30;
+        padding-bottom: 35px;
+        text-align: center;
+      }
+
+      .solar-panel-icon {
+        display: flex;
+        align-items: center;
+        margin: 20px;
+      }
+
+      .solar-panel-icon img {
+        width: 150px;
+        margin-right: 10px;
+      }
+
+      .home-button {
+        position: absolute;
+        top: 45px;
+        left: 20px;
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        background-image: url("https://cdn-icons-png.flaticon.com/512/1946/1946488.png");
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: transparent;
+        border: none;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>
         <span class="solar-panel-icon">
-            <img src="https://www.htl-leonding.at/wp-content/uploads/2022/10/htllogo_2022_black_v2.png" alt="Solar Panel Icon" />
-            Dashboard
-        </span>
-  </h1>
-</div>
-<h1>PV - Übersicht:</h1>
-<fronius-dashboard id="pv-graph1"></fronius-dashboard>
-<fronius-dashboard id="pv-graph2"></fronius-dashboard>
-<a href="index.html" class="home-button"></a>
-<script>
-          customElements.define("fronius-dashboard", class extends HTMLElement {
-            connectedCallback() {
-              const shadowRoot = this.attachShadow({
-                mode: "open"
-              });
-              shadowRoot.innerHTML = `
+          <img src="https://www.htl-leonding.at/wp-content/uploads/2022/10/htllogo_2022_black_v2.png" alt="Solar Panel Icon" /> Dashboard </span>
+      </h1>
+    </div>
+    <h1>PV - Übersicht:</h1>
+    <fronius-dashboard id="pv-graph1"></fronius-dashboard>
+    <fronius-dashboard id="pv-graph2"></fronius-dashboard>
+    <a href="index.html" class="home-button"></a>
+    <script>
+      customElements.define("fronius-dashboard", class extends HTMLElement {
+        connectedCallback() {
+          const shadowRoot = this.attachShadow({
+            mode: "open"
+          });
+          shadowRoot.innerHTML = `
 
 
-                  <style>
+                  
+					<style>
             :host {
               display: flex;
               flex-direction: column;
@@ -99,17 +102,17 @@
             }
 
           </style>
-                  <div style="display: flex;">
-                    <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1678181130578&to=1678212072726&theme=light&panelId=2" width="450" height="200"></object>
-                    <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="450" height="200"></object>
-                  </div>
-                  <div style="display: flex;">
-                    <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=8" width="450" height="200"></object>
-                    <object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=6" width="450" height="200"></object>
-                    </div>
+					<div style="display: flex;">
+						<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1678181130578&to=1678212072726&theme=light&panelId=2" width="450" height="200"></object>
+						<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675111814309&to=1675111944779&panelId=4&theme=light" width="450" height="200"></object>
+					</div>
+					<div style="display: flex;">
+						<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=8" width="450" height="200"></object>
+						<object data="http://localhost:3000/d-solo/wakVnfo4z/fronius-dashboard?orgId=1&refresh=30s&from=1675123200000&to=1675209599999&theme=light&panelId=6" width="450" height="200"></object>
+					</div>
         `;
-            }
-          });
-</script>
-</body>
+        }
+      });
+    </script>
+  </body>
 </html>
