@@ -1,5 +1,5 @@
 <?php
-$servername = "192.168.10.192";
+$servername = "172.29.16.1";
 $username = "root";
 $password = "pvv_perlau";
 $dbname = "PVV_DB";
