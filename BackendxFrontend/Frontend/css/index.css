@@ -1,0 +1,133 @@
+/* Main Css */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.header {
+    background-color: #fcc203;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.header h1 {
+    font-size: 30px;
+    margin: 0;
+    padding: 5px;
+    border-bottom: 2px solid #000;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+a {
+    color: #333;
+    text-decoration: none;
+}
+/* Solar Panel Icon */
+.solar-panel-icon {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+.solar-panel-icon img {
+    width: 30px;
+    margin-right: 10px;
+}
+.category-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 265px);
+    background: linear-gradient(to bottom, #fcc203, #fff);
+}
+/* Category Css */
+.category {
+    border-radius: 15px;
+    width: 350px;
+    height: 300px;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+    margin: 0 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    animation: fade-in 1s ease-in-out forwards;
+}
+.category:hover {
+    transform: translateY(-10px);
+}
+.category h2 {
+    font-size: 24px;
+    margin: 0;
+    padding: 10px;
+}
+.category img {
+    width: 250px;
+    margin-bottom: 20px;
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+   }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+   }
+}
+/* Mobile Css */
+@media only screen and (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+   }
+    .header {
+        background-size: cover;
+        width: 100%;
+   }
+    .category-container {
+        background-size: cover;
+        width: 100%;
+        flex-direction: column;
+        height: auto;
+   }
+    .category {
+        margin: 20px;
+        width: 70%;
+        height: 200px;
+   }
+    .category img {
+        width: 150px;
+   }
+    .category-container h1{
+        font-size: 20px;
+   }
+    .category h2 {
+        font-size: 20px;
+   }
+    .header h1 {
+        font-size: 24px;
+   }
+    .tomorrow {
+        position: static;
+        margin-top: 50px;
+   }
+    .tomorrow a {
+        position: static;
+        transform: none;
+        margin-top: 10px;
+   }
+}

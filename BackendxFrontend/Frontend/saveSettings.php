@@ -1,7 +1,7 @@
 <?php
-$servername = "172.29.16.1";
-$username = "root";
-$password = "pvv_perlau";
+$servername = "132.145.234.32";
+$username = "admin";
+$password = "PVV123";
 $dbname = "PVV_DB";
 
 // Create a new connection
@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 $pvsystemid = $_POST["pvsystemid"];
 
 // Check if the pvsystemid already exists
-$sql = "SELECT pvSystemId FROM User ORDER BY id DESC LIMIT 1";
+$sql = "SELECT pvSystemId FROM FroniusLogin ORDER BY id DESC LIMIT 1";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
         echo "Error: pvsystemid already exists";
     } else {
         // Insert new record
-        $sql = "INSERT INTO User (pvSystemId) VALUES ('$pvsystemid')";
+        $sql = "INSERT INTO FroniusLogin (pvSystemId) VALUES ('$pvsystemid')";
         if ($conn->query($sql) === TRUE) {
             echo "Record inserted successfully";
         } else {
@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
     }
 } else {
     // Insert new record if table is empty
-    $sql = "INSERT INTO User (pvSystemId) VALUES ('$pvsystemid')";
+    $sql = "INSERT INTO FroniusLogin (pvSystemId) VALUES ('$pvsystemid')";
     if ($conn->query($sql) === TRUE) {
         echo "Record inserted successfully";
     } else {
