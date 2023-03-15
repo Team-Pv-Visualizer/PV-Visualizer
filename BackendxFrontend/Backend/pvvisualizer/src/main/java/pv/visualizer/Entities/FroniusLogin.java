@@ -10,7 +10,7 @@ import javax.persistence.*;
 /**
  * Fronius Object for Fronius Json
  */
-public class User {
+public class FroniusLogin {
 
     /**
      * Generated Id for each Data Entity

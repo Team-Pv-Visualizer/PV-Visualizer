@@ -47,7 +47,7 @@ public class FroniusController {
 
     @Scheduled(every = "30s")
     public void callUpMethode(){
-        var result = em.createQuery("SELECT u.pvSystemId FROM User u ORDER BY u.id DESC").setMaxResults(1);
+        var result = em.createQuery("SELECT u.pvSystemId FROM FroniusLogin u ORDER BY u.id DESC").setMaxResults(1);
         PvSystemId = (String) result.getSingleResult();
         System.out.println(PvSystemId);
 
