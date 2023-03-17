@@ -20,11 +20,213 @@
         <img src="https://www.htl-leonding.at/wp-content/uploads/2022/10/htllogo_2022_black_v2.png" alt="HTL Leonding Logo">
         <h2>HTL Leonding</h2>
       </a>
-      <a href="html/fronius_dashboard.html" class="category">
+      <a class="category" onclick="showPopupOrRedirect()">
         <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Fronius Logo">
         <h2>Fronius DB</h2>
       </a>
+      <style>
+        /* Login Css */
+        .popup {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          z-index: 999;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .popup-inner {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0px 0px 10px #000;
+          width: 550px;
+          text-align: center;
+          transform: scale(0.7);
+          opacity: 0;
+          animation: popup 0.3s ease-in-out forwards;
+        }
+
+        @keyframes popup {
+          0% {
+            transform: scale(0.7);
+            opacity: 0;
+          }
+
+          100% {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        .popup-inner h2 {
+          margin-top: 0;
+        }
+
+        .popup-inner table {
+          margin: 20px auto;
+          width: 100%;
+        }
+
+        .popup-inner td {
+          text-align: left;
+          padding: 10px;
+        }
+
+        .popup-inner input[type="text"] {
+          width: 80%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          margin-left: 10px;
+        }
+
+        .popup-inner button {
+          margin-top: 10px;
+          padding: 10px;
+          border: none;
+          border-radius: 5px;
+          background-color: #2196f3;
+          color: #fff;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .popup-inner button:hover {
+          background-color: #0d8bf2;
+        }
+
+        .popup-inner button.cancel {
+          margin-left: 10px;
+          background-color: #ccc;
+          color: #000;
+          transition: all 0.3s ease;
+        }
+
+        .popup-inner button.cancel:hover {
+          background-color: #aaa;
+        }
+
+        .popup-inner .form-group {
+          display: flex;
+          align-items: center;
+        }
+
+        .popup-inner .form-group label {
+          width: 30%;
+          margin-right: 10px;
+        }
+
+        .popup-inner .form-group input[type="text"] {
+          width: 70%;
+        }
+
+        .popup-inner .form-group-border {
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          margin-top: 10px;
+          padding: 10px;
+        }
+
+        .popup-inner .form-group-border label {
+          margin: 0;
+          font-weight: bold;
+        }
+
+        .popup-inner button:last-child {
+          background-color: #dc3545;
+        }
+
+        @media only screen and (max-width: 768px) {
+          .popup-inner {
+            width: 80%;
+            transform: scale(0.9);
+          }
+
+          .popup-inner input[type="text"] {
+            width: 100%;
+          }
+
+          .popup-inner .form-group label {
+            width: 40%;
+          }
+
+          .popup-inner .form-group input[type="text"] {
+            width: 60%;
+          }
+        }
+      </style>
+      <div class="popup" id="popup">
+        <div class="popup-inner">
+          <h2>Login</h2>
+          <table>
+            <tr>
+              <td>PvSystemId:</td>
+              <td>
+                <input type="text" id="pvsystemid" placeholder="PvSystemId bitte eingeben!">
+              </td>
+            </tr>
+            <tr>
+              <div id="error-message"></div>
+            </tr>
+          </table>
+          <button onclick="login()">Einloggen</button>
+          <button onclick="hidePopup()">Abbrechen</button>
+        </div>
+      </div>
     </div>
+    <script>
+      function showPopupOrRedirect() {
+        var pvsystemid = ' < ? php echo $_SESSION["pvsystemid"]; ? > ';
+        if (pvsystemid) {
+          // Redirect to the dashboard page
+          window.location.href = "../html/fronius_dashboard.html";
+        } else {
+          // Show the login popup
+          showPopup();
+        }
+      }
+
+      function showPopup() {
+        document.getElementById("popup").style.display = "flex";
+      }
+
+      function hidePopupAndRedirect(url) {
+        // Close the popup
+        hidePopup();
+        // Redirect to the specified URL
+        window.location.href = url;
+      }
+
+      function login() {
+        var pvsystemid = document.getElementById("pvsystemid").value;
+        // Send a POST request to the server
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "../php/login.php", true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            if (xhr.responseText === "true") {
+              // The login was successful, close the popup and redirect
+              hidePopupAndRedirect("../html/fronius_dashboard.html");
+            } else {
+              // The login was unsuccessful, display an error message
+              document.getElementById("error-message").textContent = "Fehler: PvSystemId existiert nicht!";
+            }
+          }
+        };
+        // Send the request with the pvsystemid data
+        xhr.send("pvsystemid=" + pvsystemid);
+      }
+
+      function hidePopup() {
+        document.getElementById("popup").style.display = "none";
+      }
+    </script>
     <footer>
       <script>
         (function(d, s, id) {
