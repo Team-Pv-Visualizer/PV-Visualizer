@@ -1,7 +1,9 @@
 body {
     font-family: 'Montserrat', sans-serif;
+    height: 100vh;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 .header {
     background-color: #fff;
@@ -18,12 +20,6 @@ body {
     padding: 5px;
     border-bottom: 2px solid #000;
 }
-h1 {
-    font-size: 30px;
-    margin: 30px;
-    padding-bottom: 35px;
-    text-align: center;
-}
 .solar-panel-icon {
     display: flex;
     align-items: center;
@@ -32,6 +28,20 @@ h1 {
 .solar-panel-icon img {
     width: 150px;
     margin-right: 10px;
+}
+#wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: 100%;
+}
+#canvas2, #canvas1, #canvas4 {
+    height: 100%;
+}
+.panel {
+    flex: 1 1 40%;
+    margin: 10px;
+    height: 40%;
 }
 .popup {
     display: none;
@@ -147,8 +157,4 @@ h1 {
     background-color: transparent;
     border: none;
     outline: none;
-}
-canvas {
-    user-select: none;
-    width: 100%;
 }

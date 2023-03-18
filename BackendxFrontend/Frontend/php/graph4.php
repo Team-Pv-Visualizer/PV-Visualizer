@@ -12,10 +12,10 @@ if ($conn->connect_error) {
 }
 
 $pvsystemid = $_SESSION["pvsystemid"];
-$sql = "SELECT DATE_FORMAT(date, '%d-%m') AS Datum, SUM(p_Load) as Stromverbrauch FROM FroniusObject WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY DATE_FORMAT(date, '%d-%m') ORDER BY MIN(date) DESC;";
+$sql = "SELECT DATE_FORMAT(h.date, '%M') AS month, SUM(h.p_Load)  AS Verbrauch FROM PVV_DB.FroniusObject h WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY month ORDER BY month DESC;";
 $result = $conn->query($sql);
 
-$data = [];
+$data = array();
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }

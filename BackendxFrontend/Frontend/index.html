@@ -22,18 +22,15 @@
       <div class="popup-help-inner">
         <h2>Wie funktionierts?</h2>
         <p>
-          <ol>
-            <li>Melden Sie sich im Fronius Solar Web an.</li>
-            <li>Geben Sie unter -> Einstellungen -> Rechte, den Zugriff für Gastbenutzer frei.      
-                <img src="../Frontend/images/solarweb_guest_access.png" alt="solarweb_guest_access">
-            </li>
-            <li>
-                Kopieren Sie anschließend die PVSystemId aus der URL heraus.
-                <img src="../Frontend/images/solarweb_url.jpg" alt="solarweb_guest_access">
-            </li>
-            <li>Als nächstes, wählen Sie das Fronius Dashboard aus</li>
-            <li>Fügen Sie nun die PVSystemId in das Feld ein und klicken Sie auf "Einloggen".</li>
-          </ol>
+        <ol>
+          <li>Melden Sie sich im Fronius Solar Web an.</li>
+          <li>Geben Sie unter -> Einstellungen -> Rechte, den Zugriff für Gastbenutzer frei. <img src="images/solarweb_guest_access.png" alt="solarweb_guest_access">
+          </li>
+          <li> Kopieren Sie anschließend die PVSystemId aus der URL heraus. <img src="images/solarweb_url.jpg" alt="solarweb_guest_access">
+          </li>
+          <li>Als nächstes, wählen Sie das Fronius Dashboard aus</li>
+          <li>Fügen Sie nun die PVSystemId in das Feld ein und klicken Sie auf "Einloggen".</li>
+        </ol>
         </p>
         <button class="close-button" onclick="hideHelpPopup()">Schließen</button>
       </div>
@@ -52,47 +49,41 @@
     <button class="application-button" onclick="showApplicationPopup()"></button>
     <div class="popup-application" id="popup-application">
       <div class="popup-application-inner">
-        <h2>Antrag erstellen</h2>          
+        <h2>Antrag erstellen</h2>
         <p>
-          <table>
-            <tr>
-              <td>PvSystemId:</td>
-              <td>
-                <input type="text" id="pvsystemid" class="pvsystemid-field" placeholder="PvSystemId bitte eingeben!">
-              </td>
-            </tr>
-            <tr>
-              <td>Nachricht:</td>
-              <td>
-                <div class="messagebox">
-                  <textarea class="message-field" placeholder="Nachricht bitte eingeben!"></textarea>
-                </div>
-                
-              </td>
-            </tr>
-            <tr>
-              <div id="error-message"></div>
-            </tr>
-          </table>
-          <button onclick="login()">Absenden</button>
-          <button style="background-color: #dc3545" onclick="hideApplicationPopup()">Abbrechen</button>
+        <table>
+          <tr>
+            <td>PvSystemId:</td>
+            <td>
+              <input type="text" id="pvsystemid-field" class="pvsystemid-field" placeholder="PvSystemId bitte eingeben!">
+            </td>
+          </tr>
+          <tr>
+            <td>Nachricht:</td>
+            <td>
+              <div class="messagebox">
+                <textarea class="message-field" placeholder="Nachricht bitte eingeben!"></textarea>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <button onclick="">Absenden</button>
+        <button style="background-color: #dc3545" onclick="hideApplicationPopup()">Abbrechen</button>
         </p>
       </div>
     </div>
-        <script>
-          function showApplicationPopup() {
-            var applicationPopup = document.getElementById("popup-application");
-            applicationPopup.style.display = "flex";
-            disableOtherButtons();
-          }
+    <script>
+      function showApplicationPopup() {
+        var applicationPopup = document.getElementById("popup-application");
+        applicationPopup.style.display = "flex";
+        disableOtherButtons();
+      }
 
-          function hideApplicationPopup() {
-            var applicationPopup = document.getElementById("popup-application");
-            applicationPopup.style.display = "none";
-          }
-        </script>
-      </div>
-    </div>
+      function hideApplicationPopup() {
+        var applicationPopup = document.getElementById("popup-application");
+        applicationPopup.style.display = "none";
+      }
+    </script>
     <div class="category-container">
       <h1>Dashboard auswählen:</h1>
       <a href="html/htl_leonding.html" class="category">
@@ -124,14 +115,6 @@
     </div>
     <script>
       function showPopupOrRedirect() {
-        /*var pvsystemid = ' < ? php echo $_SESSION["pvsystemid"]; ? > ';
-        if (pvsystemid) {
-          // Redirect to the dashboard page
-          window.location.href = "html/fronius_dashboard.html";
-        } else {
-          // Show the login popup
-          showPopup();
-        }*/
         showPopup();
       }
 
@@ -140,30 +123,24 @@
       }
 
       function hidePopupAndRedirect(url) {
-        // Close the popup
         hidePopup();
-        // Redirect to the specified URL
         window.location.href = url;
       }
 
       function login() {
         var pvsystemid = document.getElementById("pvsystemid").value;
-        // Send a POST request to the server
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "../php/login.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === "true") {
-              // The login was successful, close the popup and redirect
               hidePopupAndRedirect("html/fronius_dashboard.html");
             } else {
-              // The login was unsuccessful, display an error message
               document.getElementById("error-message").textContent = "Fehler: PvSystemId existiert nicht!";
             }
           }
         };
-        // Send the request with the pvsystemid data
         xhr.send("pvsystemid=" + pvsystemid);
       }
 
