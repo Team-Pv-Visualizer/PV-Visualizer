@@ -2,7 +2,7 @@ package pv.visualizer.Controller;
 
 import io.quarkus.scheduler.Scheduled;
 import org.json.JSONObject;
-import pv.visualizer.Common.JsonReader;
+import pv.visualizer.Entities.FroniusLogin;
 import pv.visualizer.Entities.FroniusObject;
 import pv.visualizer.GenericOperations.CRUDOperations;
 
@@ -32,11 +32,6 @@ import java.util.Arrays;
  * Fronius Controller to manage Data
  */
 public class FroniusController {
-    /**
-     * Json-Variable | PvSystemId for Fronius Login
-     */
-    private String PvSystemId;
-
     List<HttpCookie> requiredCookies = new ArrayList<>();
 
     @Inject
@@ -47,10 +42,6 @@ public class FroniusController {
 
     @Scheduled(every = "30s")
     public void callUpMethode(){
-        var result = em.createQuery("SELECT u.pvSystemId FROM FroniusLogin u ORDER BY u.id DESC").setMaxResults(1);
-        PvSystemId = (String) result.getSingleResult();
-        System.out.println(PvSystemId);
-
         try {
             getData();
         } catch (IOException e) {
@@ -60,74 +51,87 @@ public class FroniusController {
         }
     }
 
-    public void getCookie() throws IOException, URISyntaxException {
-        CookieManager cookieManager = new CookieManager();
-        CookieHandler.setDefault(cookieManager);
-        cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+    public void getCookie(String id) throws IOException, URISyntaxException {
+            CookieManager cookieManager = new CookieManager();
+            CookieHandler.setDefault(cookieManager);
+            cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
 
-        String urlString = "https://www.solarweb.com/Home/GuestLogOn?pvSystemId="+PvSystemId;
-        URL url = new URL(urlString);
+            String urlString = "https://www.solarweb.com/Home/GuestLogOn?pvSystemId="+id;
+            URL url = new URL(urlString);
 
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
 
-        int responseCode = connection.getResponseCode();
+            int responseCode = connection.getResponseCode();
 
-        List<String> cookieNames = Arrays.asList(".AspNet.Auth", "Culture", "DateFormat", "TimeFormat", "__RequestVerificationToken","lbc");
-        List<HttpCookie> cookies = cookieManager.getCookieStore().get(url.toURI());
-        requiredCookies = new ArrayList<>();
-        for (HttpCookie cookie : cookies) {
-            if (cookieNames.contains(cookie.getName())) {
-                requiredCookies.add(cookie);
+            List<String> cookieNames = Arrays.asList(".AspNet.Auth", "Culture", "DateFormat", "TimeFormat", "__RequestVerificationToken","lbc");
+            List<HttpCookie> cookies = cookieManager.getCookieStore().get(url.toURI());
+            requiredCookies = new ArrayList<>();
+            for (HttpCookie cookie : cookies) {
+                if (cookieNames.contains(cookie.getName())) {
+                    requiredCookies.add(cookie);
+                }
             }
-        }
     }
 
     @GET
     public Response getData() throws IOException, URISyntaxException {
-        getCookie();
+        List<FroniusLogin> sql = em.createQuery("SELECT u FROM FroniusLogin u ORDER BY u.id DESC", FroniusLogin.class).getResultList();
 
-        String urlString = "https://www.solarweb.com/ActualData/GetCompareDataForPvSystem?pvSystemId=" + PvSystemId;
-        URL url = new URL(urlString);
+        for (FroniusLogin login : sql) {
+            String pvSystemId = login.getPvSystemId();
+            Long id = login.getId();
 
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            if(!pvSystemId.contains("pvv_admin_pl")){
+                getCookie(pvSystemId);
 
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Cookie", requiredCookies.get(0) + "; " +
-                requiredCookies.get(4) + "; " +
-                requiredCookies.get(2) + "; " +
-                requiredCookies.get(5) + "; " +
-                requiredCookies.get(3) + "; " +
-                requiredCookies.get(1)
-        );
+                String urlString = "https://www.solarweb.com/ActualData/GetCompareDataForPvSystem?pvSystemId=" + pvSystemId;
+                URL url = new URL(urlString);
 
-        int responseCode = connection.getResponseCode();
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuilder response = new StringBuilder();
+                connection.setRequestMethod("GET");
+                connection.setRequestProperty("Cookie", requiredCookies.get(0) + "; " +
+                        requiredCookies.get(4) + "; " +
+                        requiredCookies.get(2) + "; " +
+                        requiredCookies.get(5) + "; " +
+                        requiredCookies.get(3) + "; " +
+                        requiredCookies.get(1)
+                );
 
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+                int responseCode = connection.getResponseCode();
+
+                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String inputLine;
+                StringBuilder response = new StringBuilder();
+
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
+                in.close();
+                String result = response.toString();
+
+                JSONObject jsonResponse = new JSONObject(result);
+                double pLoad = jsonResponse.getDouble("P_Load");
+
+                FroniusObject froniusObject = new FroniusObject();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date();
+                if(pLoad > 0){
+                    froniusObject.p_Load = pLoad;
+                }
+                else{
+                    froniusObject.p_Load = pLoad * (-1);
+                }
+                froniusObject.date = dateFormat.format(date);
+                FroniusLogin loginId = em.find(FroniusLogin.class, id);
+                if (loginId != null) {
+                    froniusObject.login = loginId;
+                }
+                crud.add(froniusObject);
+                System.out.println("Fronius" + pLoad);
+            }
         }
-        in.close();
-        String result = response.toString();
-
-        JSONObject jsonResponse = new JSONObject(result);
-        double pLoad = jsonResponse.getDouble("P_Load");
-
-        FroniusObject froniusObject = new FroniusObject();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = new Date();
-        if(pLoad > 0){
-            froniusObject.p_Load = pLoad;
-        }
-        else{
-            froniusObject.p_Load = pLoad * (-1);
-        }
-        froniusObject.date = dateFormat.format(date);
-        crud.add(froniusObject);
-        System.out.println("Fronius" + pLoad);
         return Response.ok().build();
     }
 }

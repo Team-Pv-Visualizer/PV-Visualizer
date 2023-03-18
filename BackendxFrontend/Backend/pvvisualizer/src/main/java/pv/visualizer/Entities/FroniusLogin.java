@@ -2,6 +2,7 @@ package pv.visualizer.Entities;
 
 import lombok.*;
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -24,4 +25,10 @@ public class FroniusLogin {
      */
     @Column
     public String pvSystemId;
+
+    /**
+     * OneToMany Beziehung
+     */
+    @OneToMany(mappedBy = "login")
+    public List<FroniusObject> objects;
 }

@@ -30,4 +30,11 @@ public class FroniusObject {
      */
     @Column
     public Double p_Load;
+
+    /**
+     * OneToMany Beziehung
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "login_id")
+    public FroniusLogin login;
 }
