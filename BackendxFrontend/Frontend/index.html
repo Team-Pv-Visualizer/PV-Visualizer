@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PV-Visualizer</title>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/loginpopup.css">
+    <link rel="stylesheet" href="css/helpbutton.css">
+    <link rel="stylesheet" href="css/applicationpopup.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   </head>
   <body>
@@ -13,6 +16,82 @@
         <span class="solar-panel-icon">
           <img src="https://img.icons8.com/ios/452/solar-panel.png" alt="Solar Panel Icon" /> PV-Visualizer </span>
       </h1>
+    </div>
+    <button class="help-button" onclick="showHelpPopup()">?</button>
+    <div class="popup-help" id="popup-help">
+      <div class="popup-help-inner">
+        <h2>Wie funktionierts?</h2>
+        <p>
+          <ol>
+            <li>Melden Sie sich im Fronius Solar Web an.</li>
+            <li>Geben Sie unter -> Einstellungen -> Rechte, den Zugriff für Gastbenutzer frei.      
+                <img src="../Frontend/images/solarweb_guest_access.png" alt="solarweb_guest_access">
+            </li>
+            <li>
+                Kopieren Sie anschließend die PVSystemId aus der URL heraus.
+                <img src="../Frontend/images/solarweb_url.jpg" alt="solarweb_guest_access">
+            </li>
+            <li>Als nächstes, wählen Sie das Fronius Dashboard aus</li>
+            <li>Fügen Sie nun die PVSystemId in das Feld ein und klicken Sie auf "Einloggen".</li>
+          </ol>
+        </p>
+        <button class="close-button" onclick="hideHelpPopup()">Schließen</button>
+      </div>
+    </div>
+    <script>
+      function showHelpPopup() {
+        var helpPopup = document.getElementById("popup-help");
+        helpPopup.style.display = "flex";
+      }
+
+      function hideHelpPopup() {
+        var helpPopup = document.getElementById("popup-help");
+        helpPopup.style.display = "none";
+      }
+    </script>
+    <button class="application-button" onclick="showApplicationPopup()"></button>
+    <div class="popup-application" id="popup-application">
+      <div class="popup-application-inner">
+        <h2>Antrag erstellen</h2>          
+        <p>
+          <table>
+            <tr>
+              <td>PvSystemId:</td>
+              <td>
+                <input type="text" id="pvsystemid" class="pvsystemid-field" placeholder="PvSystemId bitte eingeben!">
+              </td>
+            </tr>
+            <tr>
+              <td>Nachricht:</td>
+              <td>
+                <div class="messagebox">
+                  <textarea class="message-field" placeholder="Nachricht bitte eingeben!"></textarea>
+                </div>
+                
+              </td>
+            </tr>
+            <tr>
+              <div id="error-message"></div>
+            </tr>
+          </table>
+          <button onclick="login()">Absenden</button>
+          <button style="background-color: #dc3545" onclick="hideApplicationPopup()">Abbrechen</button>
+        </p>
+      </div>
+    </div>
+        <script>
+          function showApplicationPopup() {
+            var applicationPopup = document.getElementById("popup-application");
+            applicationPopup.style.display = "flex";
+            disableOtherButtons();
+          }
+
+          function hideApplicationPopup() {
+            var applicationPopup = document.getElementById("popup-application");
+            applicationPopup.style.display = "none";
+          }
+        </script>
+      </div>
     </div>
     <div class="category-container">
       <h1>Dashboard auswählen:</h1>
@@ -24,142 +103,6 @@
         <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Fronius Logo">
         <h2>Fronius DB</h2>
       </a>
-      <style>
-        /* Login Css */
-        .popup {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0, 0, 0, 0.5);
-          z-index: 999;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .popup-inner {
-          background-color: #fff;
-          padding: 20px;
-          border-radius: 5px;
-          box-shadow: 0px 0px 10px #000;
-          width: 550px;
-          text-align: center;
-          transform: scale(0.7);
-          opacity: 0;
-          animation: popup 0.3s ease-in-out forwards;
-        }
-
-        @keyframes popup {
-          0% {
-            transform: scale(0.7);
-            opacity: 0;
-          }
-
-          100% {
-            transform: scale(1);
-            opacity: 1;
-          }
-        }
-
-        .popup-inner h2 {
-          margin-top: 0;
-        }
-
-        .popup-inner table {
-          margin: 20px auto;
-          width: 100%;
-        }
-
-        .popup-inner td {
-          text-align: left;
-          padding: 10px;
-        }
-
-        .popup-inner input[type="text"] {
-          width: 80%;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          margin-left: 10px;
-        }
-
-        .popup-inner button {
-          margin-top: 10px;
-          padding: 10px;
-          border: none;
-          border-radius: 5px;
-          background-color: #2196f3;
-          color: #fff;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .popup-inner button:hover {
-          background-color: #0d8bf2;
-        }
-
-        .popup-inner button.cancel {
-          margin-left: 10px;
-          background-color: #ccc;
-          color: #000;
-          transition: all 0.3s ease;
-        }
-
-        .popup-inner button.cancel:hover {
-          background-color: #aaa;
-        }
-
-        .popup-inner .form-group {
-          display: flex;
-          align-items: center;
-        }
-
-        .popup-inner .form-group label {
-          width: 30%;
-          margin-right: 10px;
-        }
-
-        .popup-inner .form-group input[type="text"] {
-          width: 70%;
-        }
-
-        .popup-inner .form-group-border {
-          border: 1px solid #ccc;
-          border-radius: 5px;
-          margin-top: 10px;
-          padding: 10px;
-        }
-
-        .popup-inner .form-group-border label {
-          margin: 0;
-          font-weight: bold;
-        }
-
-        .popup-inner button:last-child {
-          background-color: #dc3545;
-        }
-
-        @media only screen and (max-width: 768px) {
-          .popup-inner {
-            width: 80%;
-            transform: scale(0.9);
-          }
-
-          .popup-inner input[type="text"] {
-            width: 100%;
-          }
-
-          .popup-inner .form-group label {
-            width: 40%;
-          }
-
-          .popup-inner .form-group input[type="text"] {
-            width: 60%;
-          }
-        }
-      </style>
       <div class="popup" id="popup">
         <div class="popup-inner">
           <h2>Login</h2>

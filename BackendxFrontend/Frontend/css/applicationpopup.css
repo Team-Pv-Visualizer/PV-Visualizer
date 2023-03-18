@@ -1,0 +1,134 @@
+.message-field{
+  resize: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.popup-application {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .popup-application-inner {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #000;
+    width: 550px;
+    text-align: center;
+    transform: scale(0.7);
+    opacity: 0;
+    animation: popup 0.3s ease-in-out forwards;
+  }
+
+  @keyframes popup-application {
+    0% {
+      transform: scale(0.7);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .popup-application-inner h2 {
+    margin-top: 0;
+  }
+
+  .popup-application-inner table {
+    margin: 20px auto;
+    width: 100%;
+  }
+
+  .popup-application-inner input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 16px;
+  }
+
+  .popup-application-inner button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #2196f3;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .popup-application-inner button:hover {
+    background-color: #0d8bf2;
+  }
+
+  .popup-application-inner button.cancel {
+    margin-left: 10px;
+    background-color: #ccc;
+    color: #000;
+    transition: all 0.3s ease;
+  }
+
+  .popup-application-inner button.cancel:hover {
+    background-color: #aaa;
+  }
+
+  .popup-application-inner .form-group {
+    display: flex;
+    align-items: center;
+  }
+
+  .popup-application-inner .form-group label {
+    width: 30%;
+    margin-right: 10px;
+  }
+
+  .popup-application-inner .form-group input[type="text"] {
+    width: 70%;
+  }
+
+  .popup-application-inner .form-group-border {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 10px;
+  }
+
+  .popup-application-inner .form-group-border label {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .popup-application-inner button:last-child {
+    background-color: #dc3545;
+  }
+
+  @media only screen and (max-width: 768px) {
+    .popup-application-inner {
+      width: 80%;
+      transform: scale(0.9);
+    }
+
+    .popup-application-inner input[type="text"] {
+      width: 100%;
+    }
+
+    .popup-application-inner .form-group label {
+      width: 40%;
+    }
+
+    .popup-application-inner .form-group input[type="text"] {
+      width: 60%;
+    }
+  }
