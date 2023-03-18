@@ -181,14 +181,15 @@
     </div>
     <script>
       function showPopupOrRedirect() {
-        var pvsystemid = ' < ? php echo $_SESSION["pvsystemid"]; ? > ';
+        /*var pvsystemid = ' < ? php echo $_SESSION["pvsystemid"]; ? > ';
         if (pvsystemid) {
           // Redirect to the dashboard page
-          window.location.href = "../html/fronius_dashboard.html";
+          window.location.href = "html/fronius_dashboard.html";
         } else {
           // Show the login popup
           showPopup();
-        }
+        }*/
+        showPopup();
       }
 
       function showPopup() {
@@ -212,7 +213,7 @@
           if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === "true") {
               // The login was successful, close the popup and redirect
-              hidePopupAndRedirect("../html/fronius_dashboard.html");
+              hidePopupAndRedirect("html/fronius_dashboard.html");
             } else {
               // The login was unsuccessful, display an error message
               document.getElementById("error-message").textContent = "Fehler: PvSystemId existiert nicht!";
