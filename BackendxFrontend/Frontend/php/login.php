@@ -18,7 +18,11 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $_SESSION["pvsystemid"] = $pvsystemid;
-    echo "true";
+    if($pvsystemid == "pvv_admin_pl"){
+        echo "admin";
+    } else {
+        echo "true";
+    }
 } else {
     echo "false";
 }

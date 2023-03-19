@@ -77,7 +77,7 @@
         const data = await response.json();
         
         const pvSystemIdDropdown = document.getElementById("pv-system-id");
-        pvSystemIdDropdown.innerHTML = ""; // Clear any existing options
+        pvSystemIdDropdown.innerHTML = "";
         
         data.forEach(item => {
           const option = document.createElement("option");
@@ -86,8 +86,6 @@
           pvSystemIdDropdown.add(option);
         });
       }
-    
-      // Fetch and populate the pvSystemIds when the page loads
       fetchPvSystemIds();
     </script>
     

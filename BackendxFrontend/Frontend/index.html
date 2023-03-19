@@ -16,10 +16,10 @@
         <span class="solar-panel-icon">
           <img src="https://img.icons8.com/ios/452/solar-panel.png" alt="Solar Panel Icon" /> PV-Visualizer </span>
       </h1>
-    </div>
+    </div>   
     <button class="help-button" onclick="showHelpPopup()">?</button>
-    <div class="popup-help">
-      <div class="popup-inner-help" id="popup-help-inner">
+    <div class="popup-help" id="popup-help">
+      <div class="popup-help-inner">
         <div id="page1" class="page">
           <h2>Wie gelange ich an meine PvSystemId</h2>
           <p>
@@ -47,84 +47,43 @@
             </ol>
           </p>
         </div>
-        <button style="background-color: #dc3545" class="close-help-button" onclick="hideHelpPopup()">Schließen</button>  
-      </div>
-      <div class="navigation">
-        <div class="arrow left-arrow">&lt; </div>
-        <div class="arrow right-arrow"> &gt;</div>
-      </div>   
+        <button class="close-button" onclick="hideHelpPopup()">Schließen</button>
+        </div>
     </div>
     <script>
-      const page1 = document.getElementById("page1");
-      const page2 = document.getElementById("page2");
-      const leftArrow = document.querySelector(".left-arrow");
-      const rightArrow = document.querySelector(".right-arrow");
-
-      let currentPage = 1;
-      const totalPages = 2;
-
-      leftArrow.addEventListener("click", () => {
-        if (currentPage > 1) {
-          currentPage--;
-          showPage(currentPage);
-        }
-      });
-
-      rightArrow.addEventListener("click", () => {
-        if (currentPage < totalPages) {
-          currentPage++;
-          showPage(currentPage);
-        }
-      });
-
-      function showPage(pageNumber) {
-        if (pageNumber === 1) {
-          page1.style.display = "block";
-          page2.style.display = "none";
-        } else if (pageNumber === 2) {
-          page1.style.display = "none";
-          page2.style.display = "block";
-        }
-      }
-
       function showHelpPopup() {
-        var helpPopup = document.querySelector(".popup-help");
+        var helpPopup = document.getElementById("popup-help");
         helpPopup.style.display = "flex";
-        currentPage = 1;
-        showPage(currentPage);
       }
 
       function hideHelpPopup() {
-        var helpPopup = document.querySelector(".popup-help");
+        var helpPopup = document.getElementById("popup-help");
         helpPopup.style.display = "none";
-        currentPage = 1;
       }
     </script>
-    <button class="application-button" style="background-color: #0d8bf2" onclick="showApplicationPopup()">Antrag erstellen</button>
+    <button class="application-button" onclick="showApplicationPopup()">Antrag erstellen</button>
     <div class="popup-application" id="popup-application">
       <div class="popup-application-inner">
         <h2>Antrag erstellen</h2>
         <p>
-        <form method="post" action="submit.php">
-          <table>
-            <tr>
-              <td>PvSystemId:</td>
-              <td>
-                <input type="text" id="pvsystemid-field" class="pvsystemid-field" placeholder="PvSystemId bitte eingeben!">
-              </td>
-            </tr>
-            <tr>
-              <td>Nachricht:</td>
-              <td>
-                <div class="messagebox">
-                  <textarea class="message-field" placeholder="Nachricht bitte eingeben!"></textarea>
-                </div>
-              </td>
-            </tr>
-          </table>
-          <button onclick="submitForm()">Absenden</button>
-          <button style="background-color: #dc3545" onclick="hideApplicationPopup()">Abbrechen</button>
-        </form> 
+        <table>
+          <tr>
+            <td>PvSystemId:</td>
+            <td>
+              <input type="text" id="pvsystemid-field" class="pvsystemid-field" placeholder="PvSystemId bitte eingeben!">
+            </td>
+          </tr>
+          <tr>
+            <td>Nachricht:</td>
+            <td>
+              <div class="messagebox">
+                <textarea id="message-field" class="message-field" placeholder="Nachricht bitte eingeben!"></textarea>
+              </div>
+            </td>
+          </tr>
+        </table>
+        <button onclick="submitForm()">Absenden</button>
+        <button style="background-color: #dc3545" onclick="hideApplicationPopup()">Abbrechen</button>
         </p>
       </div>
     </div>
@@ -139,59 +98,20 @@
         var applicationPopup = document.getElementById("popup-application");
         applicationPopup.style.display = "none";
       }
-
       function submitForm() {
-      var pvsystemid = document.getElementById("pvsystemid-field").value;
-      var message = document.querySelector(".message-field").value;
-
-      var data = {
-        "pvsystemid": pvsystemid,
-        "message": message
-      };
-
-      var xhr = new XMLHttpRequest();
-      xhr.open("POST", "../php/submit.php", true);
-      xhr.setRequestHeader("Content-type", "application/json");
-      xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-        }
-      };
-      xhr.send(JSON.stringify(data));
+        var pvsystemid = document.getElementById("pvsystemid-field").value;
+        var message = document.getElementById("message-field").value;
       
-            // get the "Absenden" button element
-      const submitButton = document.querySelector("#popup-application button[type='submit']");
-
-      // add an event listener to the "Absenden" button
-      submitButton.addEventListener("click", (event) => {
-        event.preventDefault(); 
-
-        const pvSystemId = document.querySelector("#popup-application #pvsystemid-field").value;
-        const message = document.querySelector("#popup-application .message-field").value;
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open("POST", "/save-data.php", true);
-
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        const params = "pvSystemId=" + encodeURIComponent(pvSystemId) + "&message=" + encodeURIComponent(message);
-
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-              // show a success message
-              alert("Data saved successfully!");
-            } else {
-              // show an error message
-              alert("Error: " + xhr.statusText);
-            }
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
           }
         };
-
-        xhr.send(params);
-      });
-        }
+        xhttp.open("POST", "php/submit.php", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("pvsystemid=" + pvsystemid + "&message=" + message);
+      }
     </script>
     <div class="category-container">
       <h1>Dashboard auswählen:</h1>
@@ -239,12 +159,14 @@
       function login() {
         var pvsystemid = document.getElementById("pvsystemid").value;
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "../php/login.php", true);
+        xhr.open("POST", "php/login.php", true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === "true") {
               hidePopupAndRedirect("html/fronius_dashboard.html");
+            } else if (xhr.responseText === "admin") {
+              hidePopupAndRedirect("html/fronius_admin.html");
             } else {
               document.getElementById("error-message").textContent = "Fehler: PvSystemId existiert nicht!";
             }
@@ -256,7 +178,6 @@
       function hidePopup() {
         document.getElementById("popup").style.display = "none";
       }
-    
     </script>
     <footer>
       <script>
