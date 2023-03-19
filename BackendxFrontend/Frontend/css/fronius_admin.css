@@ -1,33 +1,56 @@
-.form-container {
-    margin-bottom: 20px;
-  }
-  
-  .label {
-    display: block;
-    font-weight: bold;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100px;
-    margin: 0 auto;
-  }
-  
-  .btn {
-    font-size: 24px;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-  }
-  
-  .green-checkmark {
-    color: green;
-  }
-  
-  .red-x {
-    color: red;
-  }
+.entries-container {
+  margin: 20px;
+}
 
+.header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  gap: 10px;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+}
 
-  
+.header span {
+  font-weight: bold;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+}
+
+.entry .pvSystemId {
+  font-weight: bold;
+}
+
+.entry .messages {
+  white-space: pre-wrap;
+}
+
+.entry button {
+  font-size: 24px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+}
+
+.entry .green-checkmark {
+  color: green;
+}
+
+.entry .red-x {
+  color: red;
+}

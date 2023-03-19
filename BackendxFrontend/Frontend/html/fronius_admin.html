@@ -9,85 +9,90 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+    <script>
+      // make an AJAX request to retrieve the data from the PHP script
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '../php/get_entries.php', true);
+      xhr.onload = function() {
+        if (this.status == 200) {
+          // parse the JSON data
+          var data = JSON.parse(this.responseText);
+          // loop through the data and create HTML elements to display it
+          var entriesContainer = document.querySelector('.entries-container');
+          var header = document.createElement('div');
+          header.classList.add('header');
+          var pvSystemIdHeader = document.createElement('span');
+          pvSystemIdHeader.textContent = 'PvSystemId:';
+          header.appendChild(pvSystemIdHeader);
+          var messagesHeader = document.createElement('span');
+          messagesHeader.textContent = 'Nachricht:';
+          header.appendChild(messagesHeader);
+          var approveHeader = document.createElement('span');
+          approveHeader.textContent = 'Zulassen:';
+          header.appendChild(approveHeader);
+          var rejectHeader = document.createElement('span');
+          rejectHeader.textContent = 'Ablehnen:';
+          header.appendChild(rejectHeader);
+          entriesContainer.appendChild(header);
+          for (var i = 0; i < data.length; i++) {
+            var entry = document.createElement('div');
+            entry.classList.add('entry');
+            var pvSystemId = document.createElement('span');
+            pvSystemId.classList.add('pvSystemId');
+            pvSystemId.textContent = data[i].pvSystemId;
+            entry.appendChild(pvSystemId);
+            var messages = document.createElement('span');
+            messages.classList.add('messages');
+            messages.textContent = data[i].messages;
+            entry.appendChild(messages);
+            var approve = document.createElement('button');
+            approve.classList.add('btn', 'green-checkmark');
+            approve.innerHTML = '&#x2714;';
+            approve.onclick = function() {
+              var entry = this.parentNode;
+              var pvSystemId = entry.querySelector('.pvSystemId').textContent;
+              addPvSystemId(pvSystemId);
+            };
+            entry.appendChild(approve);
+            var reject = document.createElement('button');
+            reject.classList.add('btn', 'red-x');
+            reject.innerHTML = '&#x2718;';
+            reject.onclick = function() {
+              var entry = this.parentNode;
+              var pvSystemId = entry.querySelector('.pvSystemId').textContent;
+              setApprove(pvSystemId, false);
+            };
+            entry.appendChild(reject);
+            entriesContainer.appendChild(entry);
+          }
+          function addPvSystemId(pvSystemId) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '../php/add_pvsystemid.php?pvSystemId=' + pvSystemId, true);
+            xhr.send();
+            location.reload()
+          }
+          
+          function setApprove(pvSystemId, value) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '../php/set_approve.php?pvSystemId=' + pvSystemId + '&value=' + value, true);
+            xhr.send();
+            location.reload()
+          }
+        }
+      };
+      xhr.send();
+    </script>
   </head>
-  <style>
-    #data-box {
-      background-color: #f2f2f2;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      animation: fadeIn 1s;
-    }
-
-    #data-value {
-      font-size: 50px;
-      margin-bottom: 10px;
-    }
-
-    #data-date {
-      font-size: 18px;
-      opacity: 0.5;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-50%);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
   <body>
-    <div class="header">
+    <div class="header-hd">
       <h1>
         <span class="solar-panel-icon">
           <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Admin Seite </span>
       </h1>
       <a href="../index.html" class="home-button"></a>
     </div>
-    <div id="content">
-      <div class="form-container">
-        <label for="pv-system-id">PvSystemId</label>
-        <select id="pv-system-id">
-          <option value="system1">System 1</option>
-          <option value="system2">System 2</option>
-          <option value="system3">System 3</option>
-        </select>
-      </div>
-    
-      <div class="form-container">
-        <label for="nachricht">Nachricht</label>
-        <textarea id="nachricht" rows="4" cols="50"></textarea>
-      </div>
-    
-      <div class="button-container">
-        <button class="btn green-checkmark">&#x2714;</button>
-        <button class="btn red-x">&#x2718;</button>
-      </div>
+    <div class="entries-container">
+      <!-- Hier werden die Einträge dynamisch hinzugefügt -->
     </div>
-    <script>
-      async function fetchPvSystemIds() {
-        const response = await fetch("get_pv_system_ids.php");
-        const data = await response.json();
-        
-        const pvSystemIdDropdown = document.getElementById("pv-system-id");
-        pvSystemIdDropdown.innerHTML = "";
-        
-        data.forEach(item => {
-          const option = document.createElement("option");
-          option.value = item.pvSystemId;
-          option.text = item.pvSystemId;
-          pvSystemIdDropdown.add(option);
-        });
-      }
-      fetchPvSystemIds();
-    </script>
-    
   </body>
 </html>

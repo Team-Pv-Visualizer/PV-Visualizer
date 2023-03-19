@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 $pvsystemid = $_POST["pvsystemid"];
 $message = $_POST["message"];
 
-$sql = "INSERT INTO FroniusMessages (pvSystemId, messages, approved) VALUES ('$pvsystemid', '$message', FALSE)";
+$sql = "INSERT INTO FroniusMessages (pvSystemId, messages) VALUES ('$pvsystemid', '$message')";
 if ($conn->query($sql) === TRUE) {
     echo "Daten erfolgreich in die Datenbank eingefügt.";
 } else {
