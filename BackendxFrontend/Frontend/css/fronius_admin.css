@@ -1,0 +1,33 @@
+.form-container {
+    margin-bottom: 20px;
+  }
+  
+  .label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+    margin: 0 auto;
+  }
+  
+  .btn {
+    font-size: 24px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .green-checkmark {
+    color: green;
+  }
+  
+  .red-x {
+    color: red;
+  }
+
+
+  

@@ -5,6 +5,7 @@
     <title>PV-Visualizer</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="../css/fronius_dashboard.css">
+    <link rel="stylesheet" href="../css/fronius_admin.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
@@ -46,10 +47,49 @@
     <div class="header">
       <h1>
         <span class="solar-panel-icon">
-          <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Dashboard </span>
+          <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Admin Seite </span>
       </h1>
       <a href="../index.html" class="home-button"></a>
     </div>
+    <div id="content">
+      <div class="form-container">
+        <label for="pv-system-id">PvSystemId</label>
+        <select id="pv-system-id">
+          <option value="system1">System 1</option>
+          <option value="system2">System 2</option>
+          <option value="system3">System 3</option>
+        </select>
+      </div>
+    
+      <div class="form-container">
+        <label for="nachricht">Nachricht</label>
+        <textarea id="nachricht" rows="4" cols="50"></textarea>
+      </div>
+    
+      <div class="button-container">
+        <button class="btn green-checkmark">&#x2714;</button>
+        <button class="btn red-x">&#x2718;</button>
+      </div>
+    </div>
+    <script>
+      async function fetchPvSystemIds() {
+        const response = await fetch("get_pv_system_ids.php");
+        const data = await response.json();
+        
+        const pvSystemIdDropdown = document.getElementById("pv-system-id");
+        pvSystemIdDropdown.innerHTML = ""; // Clear any existing options
+        
+        data.forEach(item => {
+          const option = document.createElement("option");
+          option.value = item.pvSystemId;
+          option.text = item.pvSystemId;
+          pvSystemIdDropdown.add(option);
+        });
+      }
+    
+      // Fetch and populate the pvSystemIds when the page loads
+      fetchPvSystemIds();
+    </script>
     
   </body>
 </html>

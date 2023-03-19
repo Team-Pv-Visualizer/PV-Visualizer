@@ -1,0 +1,126 @@
+li {
+  padding: 7px 0;
+  margin-top: 7px;
+  margin-right: 30px;
+}
+li img {
+  width: 700px;
+  display: block;
+  margin: 0 auto;
+  margin-right: 20px;
+}
+
+.antrag_form{
+  width: 500px;
+  height: 270px;
+  padding-right: 120px;
+  display: block;
+  margin: 0 auto;
+  margin-right: 1px;
+}
+
+.help-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 30px;
+  text-align: center;
+  cursor: pointer;
+  top: 20px;
+  z-index: 9999;
+}
+.popup-help {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-help .page {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #000;
+  height: 550px;
+  width: 800px;
+  text-align: center;
+}
+
+.popup-help .page2 {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px #000;
+  height: 550px;
+  width: 800px;
+  text-align: center;
+}
+
+.close-help-button{
+  width: 100px;
+  height: 40px;
+  font-size: 15px;
+  padding: 10px;
+  margin-left: 350px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  align-items: center;
+}
+.close-help-button:hover {
+  background-color: #0d8bf2;
+}
+.popup-help-inner button.cancel {
+  margin-left: 10px;
+  background-color: #ccc;
+  color: #000;
+  transition: all 0.3s ease;
+}
+.close-help-buttoncancel:hover {
+  background-color: #aaa;
+}
+
+.popup-help .popup-help-inner {
+  max-height: 400px;
+  overflow: auto;
+}
+.popup-help .navigation {
+  position: absolute;
+  top: 49%;
+  left: 0;
+  right: 0;
+}
+
+.popup-help .arrow {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 1000px;
+}
+
+.popup-help .left-arrow {
+  float: left;
+  margin-left: 330px;
+}
+
+.popup-help .right-arrow {
+  float: right;
+  margin-right: 330px;
+}
