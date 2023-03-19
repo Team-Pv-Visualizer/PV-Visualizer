@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>PV-Visualizer</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="../css/fronius_dashboard.css">
+  </head>
+  <style>
+    #data-box {
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      animation: fadeIn 1s;
+    }
+
+    #data-value {
+      font-size: 50px;
+      margin-bottom: 10px;
+    }
+
+    #data-date {
+      font-size: 18px;
+      opacity: 0.5;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-50%);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <body>
+    <div class="header">
+      <h1>
+        <span class="solar-panel-icon">
+          <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Dashboard </span>
+      </h1>
+      <a href="../index.html" class="home-button"></a>
+    </div>
+    
+  </body>
+</html>
