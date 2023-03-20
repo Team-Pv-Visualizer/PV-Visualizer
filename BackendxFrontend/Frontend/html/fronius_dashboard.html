@@ -3,45 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <title>PV-Visualizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="../css/fronius_dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
   </head>
-  <style>
-    #data-box {
-      background-color: #f2f2f2;
-      border-radius: 10px;
-      padding: 20px;
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      animation: fadeIn 1s;
-    }
-
-    #data-value {
-      font-size: 50px;
-      margin-bottom: 10px;
-    }
-
-    #data-date {
-      font-size: 18px;
-      opacity: 0.5;
-    }
-
-    @keyframes fadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-50%);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
   <body>
     <div class="header-hd">
       <h1>
@@ -50,32 +18,61 @@
       </h1>
       <a href="../index.html" class="home-button"></a>
     </div>
-    <div style="display:flex; flex-wrap:wrap; justify-content: space-between;">
-      <div style="flex:1 1 40%; margin:10px;height:300px;">
+    <div class="container">
+      <div class="panel1 show-graph" id="heutige-leistung">
         <h2 style="text-align: center;">Heutige Leistung</h2>
         <canvas id="canvas2"></canvas>
       </div>
-      <div style="flex:1 1 40%; margin:10px;height:300px;">
+      <div class="panel2 hide-graph" id="taeglicher-verbrauch">
         <h2 style="text-align: center;">Täglicher Verbrauch</h2>
         <canvas id="canvas1"></canvas>
       </div>
-      <div style="flex:1 1 40%; padding-top:55px;padding-right:25px;margin: 10px;">
+      <div class="panel3 hide-graph" id="aktuelle-leistung">
         <div id="data-box">
           <h2>Aktuelle Leistung</h2>
           <div id="data-value"></div>
           <div id="data-date"></div>
         </div>
       </div>
-      <div style="flex:1 1 40%; padding-top:25px; margin:10px;height:250px;">
+      <div class="panel4 hide-graph" id="monatlicher-verbrauch">
         <h2 style="text-align: center;margin-bottom:0px;">Monatlicher Verbrauch</h2>
         <canvas id="canvas4"></canvas>
       </div>
     </div>
+    <div class="dropdown-menu">
+      <label for="graphs-dropdown">Graph auswählen:</label>
+      <select id="graphs-dropdown">
+        <option value="heutige-leistung">Heutige Leistung</option>
+        <option value="taeglicher-verbrauch">Täglicher Verbrauch</option>
+        <option value="aktuelle-leistung">Aktuelle Leistung</option>
+        <option value="monatlicher-verbrauch">Monatlicher Verbrauch</option>
+      </select>
+    </div>
+    
     <script>
+      const graphsDropdown = document.getElementById('graphs-dropdown');
+      const panels = document.querySelectorAll('.panel1, .panel2, .panel3, .panel4');
+      
+      graphsDropdown.addEventListener('change', function() {
+        const selectedGraph = this.value;
+        panels.forEach(panel => {
+          if (panel.id === selectedGraph) {
+            panel.style.display = 'block';
+          } else {
+            panel.style.display = 'none';
+          }
+        });
+      });
+      
+      window.addEventListener('DOMContentLoaded', (event) => {
+        const heutigeLeistung = document.getElementById('heutige-leistung');
+        heutigeLeistung.style.display = 'block';
+      });
+      
       const dataBox = document.getElementById('data-box');
       const dataValue = document.getElementById('data-value');
       const dataDate = document.getElementById('data-date');
-
+      
       function updateData() {
         fetch('../php/graph3.php').then(response => response.json()).then(data => {
           const value = data[0].Verbrauch;
@@ -93,7 +90,7 @@
       setTimeout(() => {
         dataBox.style.opacity = 1;
       }, 100);
-
+      
       function updateChart() {
         const ctx = document.getElementById('canvas1');
         fetch('../php/graph1.php').then(response => response.json()).then(data => {
@@ -126,38 +123,54 @@
         const chartElement = document.getElementById('canvas2');
         const ctx2 = chartElement.getContext('2d');
         let data = null;
+        let data2 = null;
+        
         fetch('../php/graph2.php').then(response => response.json()).then(jsonData => {
           data = jsonData;
-          const config = {
-            type: 'line',
-            data: {
-              labels: data.map(item => item.time),
-              datasets: [{
-                label: 'Letzte 24 Stunden',
-                data: data.map(item => item.value),
-                fill: false,
-                borderColor: 'rgb(75, 192, 192)',
-                tension: 0.1
-              }]
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              scales: {
-                x: {
-                  type: 'time',
-                  time: {
-                    format: 'YYYY-MM-DD HH:mm:ss',
-                    tooltipFormat: 'll HH:mm'
+          fetch('../php/graphYesterday.php').then(response2 => response2.json()).then(jsonData2 => {
+            data2 = jsonData2;
+        
+            const config = {
+              type: 'line',
+              data: {
+                labels: data.map(item => item.time),
+                datasets: [{
+                  label: 'Letzte 24 Stunden',
+                  data: data.map(item => item.value),
+                  fill: false,
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1
+                },
+                {
+                  label: 'Gestern 24 Stunden',
+                  data: data2.map(item => item.value),
+                  fill: false,
+                  borderColor: 'rgb(255, 99, 132)',
+                  tension: 0.1
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                    type: 'time',
+                    time: {
+                      format: 'YYYY-MM-DD HH:mm:ss',
+                      tooltipFormat: 'DD.MM HH:mm'
+                    }
                   }
                 }
               }
-            }
-          };
-          new Chart(ctx2, config);
+            };
+            new Chart(ctx2, config);
+          }).catch(error2 => {
+            console.error('Error:', error2);
+          });
         }).catch(error => {
           console.error('Error:', error);
-        });
+        });        
+
         const ctx4 = document.getElementById('canvas4');
         fetch('../php/graph4.php').then(response => response.json()).then(data => {
           const chartData = {

@@ -102,7 +102,7 @@
       transform: scale(0.9);
  }
   .popup-inner input[type="text"] {
-      width: 100%;
+      width: 95%;
  }
   .popup-inner .form-group label {
       width: 40%;

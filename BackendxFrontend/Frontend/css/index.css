@@ -29,6 +29,9 @@ a {
   color: #333;
   text-decoration: none;
 }
+.nav-links {
+  display: none;
+}
 /* Solar Panel Icon */
 .solar-panel-icon {
   display: flex;
@@ -94,6 +97,72 @@ a {
       justify-content: center;
       align-items: center;
  }
+ nav {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  margin: 15px;
+}
+
+.hamburger {
+  position: relative;
+  width: 30px;
+  height: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.line {
+  width: 30px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.line:nth-child(2) {
+  transform-origin: center;
+}
+
+.nav-links {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  list-style: none;
+  margin-top: 25px;
+  padding: 0;
+  display: none;
+}
+
+.nav-links li {
+  padding: 10px;
+  width: 150px;
+}
+
+.nav-links li a {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-active {
+  display: flex;
+  flex-direction: column;
+}
+
+.hamburger.active .line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active .line:nth-child(2) {
+  transform: scaleX(0);
+}
+
+.hamburger.active .line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
   .header {
       background-size: cover;
       width: 100%;

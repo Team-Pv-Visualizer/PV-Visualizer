@@ -12,10 +12,10 @@ if ($conn->connect_error) {
 }
 
 $pvsystemid = $_SESSION["pvsystemid"];
-$sql = "SELECT DATE_FORMAT(date, '%d-%m') AS Datum, SUM(p_Load) / 1000 as Stromverbrauch FROM FroniusObject WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY DATE_FORMAT(date, '%d-%m') ORDER BY MIN(date) ASC;";
+$sql = "SELECT CAST(fo.date as datetime) as time, fo.p_Load as value FROM PVV_DB.FroniusObject fo WHERE fo.date BETWEEN DATE_SUB(NOW(), INTERVAL 48 HOUR) AND DATE_SUB(NOW(), INTERVAL 24 HOUR) AND login_id IN (  SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid') ORDER BY fo.date ASC;";
 $result = $conn->query($sql);
 
-$data = [];
+$data = array();
 while ($row = $result->fetch_assoc()) {
     $data[] = $row;
 }

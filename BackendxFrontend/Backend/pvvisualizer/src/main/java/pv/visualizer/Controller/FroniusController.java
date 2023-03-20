@@ -40,7 +40,7 @@ public class FroniusController {
     @Inject
     EntityManager em;
 
-    @Scheduled(every = "30s")
+    @Scheduled(every = "900s")
     public void callUpMethode(){
         try {
             getData();
@@ -84,52 +84,56 @@ public class FroniusController {
 
             if(!pvSystemId.contains("pvv_admin_pl")){
                 getCookie(pvSystemId);
+                if(requiredCookies.size() == 6){
+                    String urlString = "https://www.solarweb.com/ActualData/GetCompareDataForPvSystem?pvSystemId=" + pvSystemId;
+                    URL url = new URL(urlString);
 
-                String urlString = "https://www.solarweb.com/ActualData/GetCompareDataForPvSystem?pvSystemId=" + pvSystemId;
-                URL url = new URL(urlString);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setRequestProperty("Cookie", requiredCookies.get(0) + "; " +
+                            requiredCookies.get(4) + "; " +
+                            requiredCookies.get(2) + "; " +
+                            requiredCookies.get(5) + "; " +
+                            requiredCookies.get(3) + "; " +
+                            requiredCookies.get(1)
+                    );
 
-                connection.setRequestMethod("GET");
-                connection.setRequestProperty("Cookie", requiredCookies.get(0) + "; " +
-                        requiredCookies.get(4) + "; " +
-                        requiredCookies.get(2) + "; " +
-                        requiredCookies.get(5) + "; " +
-                        requiredCookies.get(3) + "; " +
-                        requiredCookies.get(1)
-                );
+                    int responseCode = connection.getResponseCode();
 
-                int responseCode = connection.getResponseCode();
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputLine;
+                    StringBuilder response = new StringBuilder();
 
-                BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String inputLine;
-                StringBuilder response = new StringBuilder();
+                    while ((inputLine = in.readLine()) != null) {
+                        response.append(inputLine);
+                    }
+                    in.close();
+                    String result = response.toString();
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
+                    JSONObject jsonResponse = new JSONObject(result);
+                    double pLoad = jsonResponse.getDouble("P_Load");
+
+                    FroniusObject froniusObject = new FroniusObject();
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+                    if(pLoad > 0){
+                        froniusObject.p_Load = pLoad;
+                    }
+                    else{
+                        froniusObject.p_Load = pLoad * (-1);
+                    }
+                    froniusObject.date = dateFormat.format(date);
+                    FroniusLogin loginId = em.find(FroniusLogin.class, id);
+                    if (loginId != null) {
+                        froniusObject.login = loginId;
+                    }
+                    crud.add(froniusObject);
+                    System.out.println("Fronius" + pLoad + " " + pvSystemId);
                 }
-                in.close();
-                String result = response.toString();
-
-                JSONObject jsonResponse = new JSONObject(result);
-                double pLoad = jsonResponse.getDouble("P_Load");
-
-                FroniusObject froniusObject = new FroniusObject();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date();
-                if(pLoad > 0){
-                    froniusObject.p_Load = pLoad;
+                else {
+                    System.out.println("Fronius-PvSystemId Ungültig" + " " + pvSystemId);
                 }
-                else{
-                    froniusObject.p_Load = pLoad * (-1);
-                }
-                froniusObject.date = dateFormat.format(date);
-                FroniusLogin loginId = em.find(FroniusLogin.class, id);
-                if (loginId != null) {
-                    froniusObject.login = loginId;
-                }
-                crud.add(froniusObject);
-                System.out.println("Fronius" + pLoad);
             }
         }
         return Response.ok().build();

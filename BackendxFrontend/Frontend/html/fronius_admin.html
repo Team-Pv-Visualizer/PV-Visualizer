@@ -10,7 +10,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
     <script>
-      // make an AJAX request to retrieve the data from the PHP script
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '../php/get_entries.php', true);
       xhr.onload = function() {
@@ -87,12 +86,10 @@
     <div class="header-hd">
       <h1>
         <span class="solar-panel-icon">
-          <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" /> Fronius Admin Seite </span>
+          <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Solar Panel Icon" />Admin Seite </span>
       </h1>
       <a href="../index.html" class="home-button"></a>
     </div>
-    <div class="entries-container">
-      <!-- Hier werden die Einträge dynamisch hinzugefügt -->
-    </div>
+    <div class="entries-container"></div>
   </body>
 </html>

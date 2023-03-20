@@ -25,6 +25,8 @@
   height: 150px;
   margin-left: 20px;
   resize: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
 }
 .popup-application {
   display: none;
@@ -115,4 +117,20 @@
 .popup-application-inner .form-group-border label {
   margin: 0;
   font-weight: bold;
+}
+@media only screen and (max-width: 768px) {
+  .application-button {
+      display: none;
+  }
+  .popup-application-inner {
+    margin: 10px;
+    width: 300px;
+  }
+  .message-field{
+    width: 200px;
+    margin-left: 0px;
+  }
+  .popup-application-inner input{
+    width: 200px;
+  }
 }
