@@ -40,7 +40,8 @@ public class FroniusController {
     @Inject
     EntityManager em;
 
-    @Scheduled(every = "900s")
+    //@Scheduled(every = "900s")
+    @Scheduled(every = "30s")
     public void callUpMethode(){
         try {
             getData();

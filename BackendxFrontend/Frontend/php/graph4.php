@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 $pvsystemid = $_SESSION["pvsystemid"];
-$sql = "SELECT DATE_FORMAT(h.date, '%M') AS month, SUM(h.p_Load) / 1000  AS Verbrauch FROM PVV_DB.FroniusObject h WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY month ORDER BY month DESC;";
+$sql = "SELECT DATE_FORMAT(h.date, '%M') AS month, (SUM(p_Load) / 1000) / 15  AS Verbrauch FROM PVV_DB.FroniusObject h WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY month ORDER BY month DESC;";
 $result = $conn->query($sql);
 
 $data = array();
