@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 $pvsystemid = $_SESSION["pvsystemid"];
-$sql = "SELECT h.date as Datum, CONCAT(ROUND(h.p_Load, 2), ' Wh') as Verbrauch FROM PVV_DB.FroniusObject h WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) ORDER BY h.id DESC LIMIT 1;";
+$sql = "SELECT h.date as Datum, CONCAT(ROUND(SUM(h.p_Load), 2), ' Wh') as Verbrauch FROM PVV_DB.FroniusObject h WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) ORDER BY h.id DESC LIMIT 1;";
 $result = $conn->query($sql);
 
 $data = array();

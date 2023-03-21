@@ -12,7 +12,7 @@ if ($conn->connect_error) {
 }
 
 $pvsystemid = $_SESSION["pvsystemid"];
-$sql = "SELECT DATE_FORMAT(date, '%d-%m') AS Datum, (SUM(p_Load) / 1000) / 15 as Stromverbrauch FROM FroniusObject WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY DATE_FORMAT(date, '%d-%m') ORDER BY MIN(date) ASC;";
+$sql = "SELECT DATE_FORMAT(date, '%d-%m') AS Datum, (ROUND(SUM(p_Load), 2) / 1000) / 15 as Stromverbrauch FROM FroniusObject WHERE login_id IN ( SELECT id FROM FroniusLogin WHERE pvSystemId = '$pvsystemid' ) GROUP BY DATE_FORMAT(date, '%d-%m') ORDER BY MIN(date) ASC;";
 $result = $conn->query($sql);
 
 $data = [];
