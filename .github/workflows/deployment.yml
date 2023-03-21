@@ -25,13 +25,7 @@ jobs:
         user: ${{ secrets.SERVER_USER }}
         server: ${{ secrets.SERVER }}
         alias: leopvvusalizer
-    
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: 'latest'
-        # extended: true
-        
+            
     - name: test ssh
       run: |
         ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null leopvvusalizer ls -l
