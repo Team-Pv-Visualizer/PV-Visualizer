@@ -159,7 +159,7 @@
         <h2>HTL Leonding</h2>
       </a>
       <a class="category" onclick="showPopupOrRedirect()">
-        <img src="https://www.solarweb.com/Content/images/fronius-logo.svg" alt="Fronius Logo">
+        <img src="https://img.icons8.com/ios/452/solar-panel.png" alt="Fronius Logo">
         <h2>Fronius DB</h2>
       </a>
       <div class="popup" id="popup">
@@ -203,9 +203,9 @@
         xhr.onreadystatechange = function() {
           if (xhr.readyState === 4 && xhr.status === 200) {
             if (xhr.responseText === "true") {
-              hidePopupAndRedirect("html/fronius_dashboard.html");
+              hidePopupAndRedirect("html/dashboard.html");
             } else if (xhr.responseText === "admin") {
-              hidePopupAndRedirect("html/fronius_admin.html");
+              hidePopupAndRedirect("html/admin.html");
             } else {
               document.getElementById("error-message").textContent = "Fehler: PvSystemId existiert nicht!";
             }
