@@ -110,16 +110,22 @@
       function submitForm() {
         var pvsystemid = document.getElementById("pvsystemid-field").value;
         var message = document.getElementById("message-field").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-          }
-        };
-        xhttp.open("POST", "php/submit.php", true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.send("pvsystemid=" + pvsystemid + "&message=" + message);
-        hideApplicationPopup();
+
+        if (pvsystemid === "" || message === "") {
+          alert("Bitte füllen Sie alle Felder aus!");
+        } else {
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+              alert(this.responseText);
+            }
+          };
+
+          xhttp.open("POST", "php/submit.php", true);
+          xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          xhttp.send("pvsystemid=" + pvsystemid + "&message=" + message);
+          hideApplicationPopup();
+        }
       }
     </script>
     <nav>
