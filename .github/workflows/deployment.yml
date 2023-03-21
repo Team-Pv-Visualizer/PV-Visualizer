@@ -5,7 +5,7 @@ on:
       - main
     
     paths: 
-      - BackendxFrontend/pvv_website/**
+      - BackendxFrontend/Frontend/**
 
 jobs:
   deploy:
@@ -31,18 +31,11 @@ jobs:
       with:
         hugo-version: 'latest'
         # extended: true
-    
-    - name: build Hugo website
-      run: |
-        pwd
-        ls -l
-        hugo
-      working-directory: BackendxFrontend/pvv_website 
-    
+        
     - name: test ssh
       run: |
-        ssh server ls -l
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null leopvvusalizer ls -l
     - name: deploy to server
       run: |
-        scp -r * server:/var/www/html 
-      working-directory: BackendxFrontend/pvv_website/public  
+        scp -r -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null * leopvvusalizer:/var/www/html 
+      working-directory: BackendxFrontend/Frontend
