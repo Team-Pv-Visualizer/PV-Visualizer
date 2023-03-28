@@ -191,6 +191,9 @@ body {
   .show-graph {
     display: block;
   }
+  .canvas4 .canvas1 {
+    height: 350;
+  }
 }
 @media screen and (min-width: 769px) {
     .dropdown-menu {
